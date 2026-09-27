@@ -1,0 +1,2700 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portée, entraîneur de tons du mandarin</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D2B2A'/%3E%3Cg stroke='%23C9D4CF' stroke-width='2'%3E%3Cpath d='M10 14H54M10 23H54M10 32H54M10 41H54M10 50H54'/%3E%3C/g%3E%3Cpath d='M12 40C22 40 22 20 32 20S46 44 54 30' fill='none' stroke='%23F9FBF8' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&amp;family=Noto+Serif+SC:wght@500;700&amp;display=swap">
+<script async id="pp-lib" src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.28.2/dist/index.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #EEF2EE;
+  --sheet: #F9FBF8;
+  --ink: #1D2B2A;
+  --ink-2: #4A5B58;
+  --ink-3: #7C8B87;
+  --rule: #C9D4CF;
+  --rule-2: #DCE4E0;
+  --sel: rgba(29, 43, 42, 0.045);
+  --t1: #C8323C;
+  --t2: #B06A00;
+  --t3: #1A7D51;
+  --t4: #2457A6;
+  --t0: #7B8088;
+  --focus: #2457A6;
+  --btn-bg: #1D2B2A;
+  --btn-fg: #F9FBF8;
+  --warn-bg: #F6EEDC;
+  --band: 0.26;
+  --font-ui: "Atkinson Hyperlegible", "Segoe UI", "Noto Sans", "DejaVu Sans", system-ui, sans-serif;
+  --font-han: "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --r-s: 6px;
+  --r-m: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #121A19;
+    --sheet: #182321;
+    --ink: #E1EAE6;
+    --ink-2: #A9B8B3;
+    --ink-3: #7F8F8A;
+    --rule: #33423F;
+    --rule-2: #26332F;
+    --sel: rgba(225, 234, 230, 0.06);
+    --t1: #FF7B7F;
+    --t2: #F2A93B;
+    --t3: #4FC98F;
+    --t4: #7FA8F5;
+    --t0: #9BA2AA;
+    --focus: #7FA8F5;
+    --btn-bg: #E1EAE6;
+    --btn-fg: #121A19;
+    --warn-bg: #2D2718;
+    --band: 0.42;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #121A19;
+  --sheet: #182321;
+  --ink: #E1EAE6;
+  --ink-2: #A9B8B3;
+  --ink-3: #7F8F8A;
+  --rule: #33423F;
+  --rule-2: #26332F;
+  --sel: rgba(225, 234, 230, 0.06);
+  --t1: #FF7B7F;
+  --t2: #F2A93B;
+  --t3: #4FC98F;
+  --t4: #7FA8F5;
+  --t0: #9BA2AA;
+  --focus: #7FA8F5;
+  --btn-bg: #E1EAE6;
+  --btn-fg: #121A19;
+  --warn-bg: #2D2718;
+  --band: 0.42;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 12px); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.55 var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p, ul, ol { margin: 0; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.muted { color: var(--ink-2); }
+.small { font-size: 0.875rem; }
+[hidden] { display: none !important; }
+
+/* ---------- Mise en page ---------- */
+
+.app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "head" "main" "lib";
+  gap: 1.75rem;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+}
+.masthead { grid-area: head; }
+.main { grid-area: main; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; min-width: 0; align-content: start; }
+.main > *, .sheet > * { min-width: 0; }
+.library { grid-area: lib; min-width: 0; }
+@media (min-width: 960px) {
+  .app {
+    grid-template-columns: 290px minmax(0, 1fr);
+    grid-template-areas: "head head" "lib main";
+    column-gap: 2.75rem;
+    padding: 2rem 2rem 4rem;
+  }
+  .library {
+    position: sticky;
+    top: 1.25rem;
+    align-self: start;
+    max-height: calc(100vh - 2.5rem);
+    overflow: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+  }
+}
+
+/* ---------- En-tête ---------- */
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+.brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 1.25rem; max-width: 46rem; }
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 2.35rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.mark { width: 2.9rem; height: auto; flex: none; }
+.mark .lines { stroke: var(--rule); stroke-width: 2; }
+.mark .curve { fill: none; stroke: var(--ink); stroke-width: 4.5; stroke-linecap: round; }
+.tagline { color: var(--ink-2); max-width: 34rem; }
+.head-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.calib { font-size: 0.9375rem; color: var(--ink-2); max-width: 30rem; }
+.calib.warn { color: var(--ink); background: var(--warn-bg); padding: 0.45rem 0.7rem; border-radius: var(--r-s); }
+
+/* ---------- Boutons ---------- */
+
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: 0.45; }
+.controls { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.controls button, .btn-file, .d-actions button, .report button {
+  border: 1.5px solid var(--ink-2);
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.55rem 1.05rem;
+  line-height: 1.2;
+  min-height: 44px;
+}
+.controls button:hover:not(:disabled), .btn-file:hover, .d-actions button:hover:not(:disabled), .report button:hover:not(:disabled) { background: var(--sel); }
+.btn-file { position: relative; display: inline-flex; align-items: center; cursor: pointer; }
+.btn-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.btn-file:focus-within { outline: 3px solid var(--focus); outline-offset: 2px; }
+button.ghost { border-color: var(--rule); color: var(--ink-2); }
+button.link {
+  border: 0; background: none; padding: 0; min-height: 0;
+  color: inherit; text-decoration: underline; text-underline-offset: 3px; font-weight: 700;
+}
+#btn-theme { border: 1.5px solid var(--rule); background: transparent; border-radius: 999px; padding: 0.35rem 0.8rem; color: var(--ink-2); font-size: 0.875rem; }
+
+.controls .rec {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--btn-bg); color: var(--btn-fg); border-color: var(--btn-bg);
+  font-weight: 700; padding: 0.6rem 1.35rem 0.6rem 1.05rem; min-height: 48px;
+}
+.controls button.rec:hover:not(:disabled) { background: var(--btn-bg); filter: brightness(1.18); }
+.rec .dot {
+  width: 0.8rem; height: 0.8rem; border-radius: 50%;
+  background: var(--btn-fg); box-shadow: inset 0 0 0 2px var(--btn-bg);
+}
+.rec.is-rec .dot { background: #E5484D; box-shadow: 0 0 0 0 rgba(229, 72, 77, 0.6); animation: pulse 1.3s ease-out infinite; }
+@keyframes pulse { to { box-shadow: 0 0 0 0.6rem rgba(229, 72, 77, 0); } }
+
+.options { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; margin-top: 0.85rem; font-size: 0.9375rem; color: var(--ink-2); }
+.options label { display: inline-flex; gap: 0.45rem; align-items: center; }
+.options label.disabled { opacity: 0.55; }
+.options input { width: 1.05rem; height: 1.05rem; accent-color: var(--ink); }
+
+/* ---------- La feuille : phrase + portée ---------- */
+
+.sheet {
+  background: var(--sheet);
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-m);
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+@media (max-width: 600px) { .sheet { padding: 1.1rem 0.9rem 1rem; border-radius: 10px; } }
+.kicker { color: var(--ink-3); font-size: 0.9375rem; margin-bottom: 0.6rem; }
+
+.phrase { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.2rem 0.55rem; margin-bottom: 0.4rem; }
+.syl { display: inline-flex; flex-direction: column; align-items: center; min-width: 2.2rem; }
+.syl .py { font-family: var(--font-han); font-size: 1.15rem; font-weight: 500; line-height: 1.3; }
+.syl .hz { font-family: var(--font-han); font-size: clamp(2.3rem, 5.5vw, 3.35rem); font-weight: 700; line-height: 1.12; }
+.syl .py-dict { font-family: var(--font-han); font-size: 0.8125rem; color: var(--ink-3); line-height: 1.2; min-height: 1em; }
+.syl.changed .py { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.pause { width: 0.9rem; align-self: stretch; border-right: 2px dotted var(--rule); margin-right: 0.35rem; }
+.fr { color: var(--ink-2); font-size: 1.05rem; margin-top: 0.35rem; }
+.notes { margin-top: 0.75rem; display: grid; gap: 0.4rem; font-size: 0.9375rem; color: var(--ink-2); max-width: 52rem; }
+.notes ul { padding-left: 1.1rem; }
+.notes [lang="zh-CN"] { font-family: var(--font-han); color: var(--ink); }
+.notes .warn, .note-calib { color: var(--ink); background: var(--warn-bg); padding: 0.5rem 0.75rem; border-radius: var(--r-s); }
+.sheet .controls { margin-top: 1.25rem; }
+
+.rec-live { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.8rem; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.meter { flex: 0 1 18rem; height: 8px; border-radius: 999px; background: var(--rule-2); overflow: hidden; }
+.meter span { display: block; height: 100%; width: 0; background: var(--ink); transition: width 80ms linear; }
+.status { margin-top: 0.75rem; min-height: 1.4em; color: var(--ink-2); }
+.status.error { color: var(--ink); font-weight: 700; }
+.status.error::before { content: "✗ "; }
+.status.ok { color: var(--ink); }
+.status.ok::before { content: "✓ "; }
+.status:empty { display: none; }
+
+.staff-block { margin-top: 1.25rem; border-top: 1px solid var(--rule-2); padding-top: 0.75rem; }
+.staff-scroll { overflow-x: auto; }
+#staff { display: block; font-family: var(--font-ui); }
+.staff-hint { font-size: 0.9375rem; color: var(--ink-3); margin-top: 0.3rem; }
+#staff .sel { fill: var(--sel); }
+#staff .lvl { stroke: var(--rule); stroke-width: 1.2; }
+#staff .lvl-n { fill: var(--ink-3); font-size: 15px; text-anchor: middle; }
+#staff .lvl-w { fill: var(--ink-3); font-size: 12px; text-anchor: middle; }
+#staff .sep { stroke: var(--rule); stroke-width: 1.2; stroke-dasharray: 3 5; }
+#staff .sep.strong { stroke: var(--ink-3); stroke-dasharray: none; }
+#staff .tgt { fill: none; stroke-width: 17; stroke-linecap: round; stroke-linejoin: round; opacity: var(--band); }
+#staff .st-score.small { font-size: 14px; }
+#staff .st-hz { font-family: var(--font-han); font-size: 30px; font-weight: 700; text-anchor: middle; }
+#staff .st-py { font-family: var(--font-han); font-size: 17px; text-anchor: middle; }
+#staff .st-hz.small { font-size: 24px; }
+#staff .st-py.small { font-size: 14px; }
+#staff .st-score { font-size: 17px; font-weight: 700; text-anchor: middle; fill: var(--ink); font-variant-numeric: tabular-nums; }
+#staff .st-score.v-moyen { fill: var(--ink-2); }
+#staff .st-score.v-na { fill: var(--ink-3); }
+#staff .voice {
+  fill: none; stroke: var(--ink); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round;
+}
+#staff .voice.draw { stroke-dasharray: 1; stroke-dashoffset: 0; animation: draw 0.7s ease-out both; }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+#staff .hit { fill: transparent; }
+#staff.has-result .hit { cursor: pointer; }
+#staff .hit:focus-visible { outline: none; stroke: var(--focus); stroke-width: 3; rx: 8px; }
+#staff .t1 { fill: var(--t1); } #staff .tgt.t1 { stroke: var(--t1); fill: none; }
+#staff .t2 { fill: var(--t2); } #staff .tgt.t2 { stroke: var(--t2); fill: none; }
+#staff .t3 { fill: var(--t3); } #staff .tgt.t3 { stroke: var(--t3); fill: none; }
+#staff .t4 { fill: var(--t4); } #staff .tgt.t4 { stroke: var(--t4); fill: none; }
+#staff .t0 { fill: var(--t0); } #staff .tgt.t0 { stroke: var(--t0); fill: none; }
+
+.t1 { color: var(--t1); } .t2 { color: var(--t2); } .t3 { color: var(--t3); } .t4 { color: var(--t4); } .t0 { color: var(--t0); }
+
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 1.1rem; margin-top: 0.6rem; font-size: 0.875rem; color: var(--ink-2); }
+.legend .key { display: inline-flex; align-items: center; gap: 0.4rem; }
+.legend .sw { width: 1.6rem; height: 0.55rem; border-radius: 999px; opacity: 0.45; background: currentColor; }
+.legend .ink { width: 1.6rem; height: 3px; border-radius: 2px; background: var(--ink); }
+
+/* ---------- Résultats ---------- */
+
+.results { display: grid; gap: 1.5rem; }
+.results h2, .report h2, .library h2 { font-size: 1.3rem; line-height: 1.25; }
+.results h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+.score-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+.big-score { display: flex; align-items: baseline; gap: 0.45rem; }
+.big-score .num { font-size: 3.4rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.big-score .of { color: var(--ink-2); }
+.score-text { display: grid; gap: 0.2rem; max-width: 40rem; }
+.warnings { margin-top: 0.8rem; padding: 0.6rem 0.9rem 0.6rem 1.9rem; background: var(--warn-bg); border-radius: var(--r-s); display: grid; gap: 0.25rem; }
+#summary > .muted.small { margin-top: 0.7rem; max-width: 46rem; }
+
+.detail { border-left: 4px solid var(--ink); padding: 0.2rem 0 0.2rem 1.25rem; display: grid; gap: 0.65rem; max-width: 50rem; }
+.detail:empty { display: none; }
+.detail-head { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.d-hz { font-family: var(--font-han); font-size: 3.2rem; font-weight: 700; line-height: 1; }
+.d-id { display: grid; gap: 0.1rem; }
+.d-py { font-family: var(--font-han); font-size: 1.35rem; font-weight: 500; }
+.d-score { margin-left: auto; font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 0.4rem; }
+.d-score .sym { display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 2px solid var(--ink); font-size: 1.1rem; }
+.d-score.v-faux .sym { background: var(--ink); color: var(--sheet); }
+.d-score.v-moyen .sym { border-style: dashed; }
+.d-looks { font-weight: 700; font-size: 1.1rem; }
+.d-issues { padding-left: 1.2rem; display: grid; gap: 0.3rem; }
+.d-issues .major { font-weight: 700; }
+.d-note, .d-info, .d-measure { font-size: 0.9375rem; color: var(--ink-2); }
+.d-tip { background: var(--sheet); border: 1px solid var(--rule-2); border-radius: var(--r-s); padding: 0.6rem 0.85rem; }
+.d-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.2rem; }
+
+.asr { border-top: 1px solid var(--rule-2); padding-top: 1rem; display: grid; gap: 0.6rem; max-width: 50rem; }
+.asr:empty { display: none; }
+.asr-text { font-family: var(--font-han); font-size: 1.15rem; color: var(--ink); }
+.asr-row { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.asr-row li {
+  display: inline-flex; flex-direction: column; align-items: center; min-width: 2.6rem;
+  padding: 0.3rem 0.45rem; border-radius: var(--r-s); border: 1.5px solid var(--rule);
+  font-family: var(--font-han); font-size: 1.3rem; line-height: 1.2;
+}
+.asr-row li.ok { border-color: var(--ink-2); }
+.asr-row li.diff, .asr-row li.miss { border: 2px dashed var(--ink); }
+.asr-row li.miss { opacity: 0.6; }
+.asr-row .heard { font-size: 0.8rem; color: var(--ink-2); }
+
+/* ---------- Rapport ---------- */
+
+.report { display: grid; gap: 0.7rem; }
+.report > p { color: var(--ink-2); max-width: 48rem; }
+#report {
+  width: 100%; min-height: 11rem; resize: vertical;
+  background: var(--sheet); color: var(--ink);
+  border: 1px solid var(--rule); border-radius: var(--r-s);
+  padding: 0.75rem 0.9rem; font-size: 0.875rem; line-height: 1.5;
+}
+#copy-msg { color: var(--ink-2); font-size: 0.9375rem; min-height: 1.4em; }
+
+/* ---------- Bibliothèque ---------- */
+
+.library { display: grid; gap: 1rem; align-content: start; }
+#lib details { border-top: 1px solid var(--rule); }
+#lib details:last-child { border-bottom: 1px solid var(--rule); }
+#lib summary {
+  display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 0.1rem; cursor: pointer; font-weight: 700; list-style: none;
+}
+#lib summary::-webkit-details-marker { display: none; }
+#lib summary::after { content: "+"; color: var(--ink-3); font-weight: 400; font-size: 1.2rem; line-height: 1; width: 1rem; text-align: center; }
+#lib details[open] summary::after { content: "−"; }
+#lib summary .count { margin-left: auto; color: var(--ink-3); font-weight: 400; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.lib-intro { color: var(--ink-2); font-size: 0.875rem; margin: 0 0 0.5rem; }
+#lib ul { list-style: none; padding: 0 0 0.6rem; display: grid; gap: 0.1rem; }
+#lib li { display: flex; align-items: stretch; gap: 0.25rem; }
+.lib-item {
+  flex: 1; display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 0.7rem;
+  text-align: left; border: 0; background: none; border-radius: var(--r-s); padding: 0.4rem 0.5rem;
+}
+.lib-item:hover { background: var(--sel); }
+.lib-item[aria-current="true"] { background: var(--sheet); box-shadow: inset 3px 0 0 var(--ink); }
+.li-hz { font-family: var(--font-han); font-size: 1.15rem; font-weight: 500; }
+.li-py { color: var(--ink-2); font-size: 0.875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.li-last { grid-column: 2; font-size: 0.8125rem; color: var(--ink-3); }
+.li-remove { border: 0; background: none; color: var(--ink-3); font-size: 0.8125rem; text-decoration: underline; padding: 0 0.3rem; }
+
+.custom { border: 1px solid var(--rule); border-radius: var(--r-m); padding: 0.2rem 0.9rem; }
+.custom[open] { padding-bottom: 1rem; }
+.custom summary { padding: 0.65rem 0; cursor: pointer; font-weight: 700; }
+.custom form { display: grid; gap: 0.35rem; }
+.custom label { font-size: 0.9375rem; margin-top: 0.35rem; }
+.custom input {
+  width: 100%; padding: 0.55rem 0.7rem; border-radius: var(--r-s);
+  border: 1px solid var(--rule); background: var(--sheet); min-height: 44px;
+}
+#in-hanzi { font-family: var(--font-han); font-size: 1.15rem; }
+.custom .hint { font-size: 0.8125rem; color: var(--ink-2); margin-top: 0.3rem; }
+.custom button[type="submit"] {
+  margin-top: 0.5rem; justify-self: start;
+  background: var(--btn-bg); color: var(--btn-fg); border: 0; border-radius: 999px; padding: 0.6rem 1.1rem; font-weight: 700; min-height: 44px;
+}
+
+.trends { display: grid; gap: 0.6rem; padding-top: 0.5rem; }
+.trends h2 { font-size: 1.1rem; }
+.focus { background: var(--sheet); border-radius: var(--r-s); padding: 0.5rem 0.7rem; border: 1px solid var(--rule-2); }
+.trend-list { list-style: none; padding: 0; display: grid; gap: 0.35rem; }
+.trend-list li { display: grid; grid-template-columns: 1fr auto; gap: 0.2rem 0.6rem; align-items: center; font-size: 0.875rem; }
+.tr-lbl { grid-column: 1; grid-row: 1; color: var(--ink); }
+.tr-val { grid-column: 2; grid-row: 1; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); }
+.tr-bar { grid-column: 1 / -1; grid-row: 2; height: 7px; border-radius: 999px; background: var(--rule-2); overflow: hidden; }
+.tr-bar span { display: block; height: 100%; background: currentColor; }
+.tr-n { display: none; }
+.trend-list .tS { color: var(--ink-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  #staff .voice.draw { animation: none; }
+  .rec.is-rec .dot { animation: none; }
+  .meter span { transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <div class="brand">
+      <h1 class="wordmark"><svg class="mark" viewBox="0 0 64 44" aria-hidden="true"><path class="lines" d="M2 4H62M2 13H62M2 22H62M2 31H62M2 40H62"/><path class="curve" d="M5 29C14 29 15 10 25 10S41 37 59 17"/></svg>Portée</h1>
+      <p class="tagline">Entraîneur de tons pour le mandarin. Enregistre-toi, compare ta voix aux tons attendus, puis envoie le rapport à Claude pour qu’il te corrige.</p>
+    </div>
+    <div class="head-tools">
+      <p id="calib-badge" class="calib"></p>
+      <button id="btn-theme" type="button">Thème : auto</button>
+    </div>
+  </header>
+
+  <main id="main" class="main">
+    <section class="sheet" aria-labelledby="h-target">
+      <h2 id="h-target" class="sr-only">Phrase à prononcer et portée des tons</h2>
+      <p id="target-cat" class="kicker"></p>
+      <div id="phrase" class="phrase" lang="zh-CN" role="group"></div>
+      <p id="phrase-fr" class="fr"></p>
+      <div id="phrase-notes" class="notes"></div>
+
+      <div class="controls">
+        <button id="btn-rec" class="rec" type="button" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="lbl">Enregistrer</span></button>
+        <button id="btn-model" type="button">Écouter le modèle</button>
+        <button id="btn-play" type="button" disabled>Réécouter ma voix</button>
+        <label class="btn-file">Importer un audio<input id="in-file" type="file" accept="audio/*"></label>
+        <label class="btn-file" id="btn-capture" hidden>Enregistrer avec l’appli du téléphone<input id="in-capture" type="file" accept="audio/*" capture></label>
+      </div>
+      <div class="options">
+        <label><input type="checkbox" id="opt-auto" checked> Arrêt automatique après la phrase</label>
+        <label><input type="checkbox" id="opt-slow"> Modèle ralenti</label>
+        <label id="opt-asr-wrap"><input type="checkbox" id="opt-asr" checked> Test d’intelligibilité (reconnaissance vocale)</label>
+      </div>
+      <div id="rec-live" class="rec-live" hidden>
+        <div class="meter" aria-hidden="true"><span id="meter-bar"></span></div>
+        <span id="rec-time">0,0 s</span>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <div class="staff-block">
+        <div class="staff-scroll">
+          <svg id="staff" viewBox="0 0 1000 360" role="group" aria-label="Portée des tons : forme attendue de chaque syllabe et courbe de ta voix"></svg>
+        </div>
+        <p id="staff-hint" class="staff-hint">Les bandes colorées montrent la forme attendue de chaque ton. Enregistre-toi pour y superposer ta voix.</p>
+        <p class="legend">
+          <span class="key"><span class="ink" aria-hidden="true"></span>ta voix</span>
+          <span class="key t1"><span class="sw" aria-hidden="true"></span>1er ton</span>
+          <span class="key t2"><span class="sw" aria-hidden="true"></span>2e ton</span>
+          <span class="key t3"><span class="sw" aria-hidden="true"></span>3e ton</span>
+          <span class="key t4"><span class="sw" aria-hidden="true"></span>4e ton</span>
+          <span class="key t0"><span class="sw" aria-hidden="true"></span>neutre</span>
+          <span>Échelle de 1 (grave) à 5 (aigu), relative à ta voix.</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-labelledby="h-results" hidden>
+      <h2 id="h-results">Résultat</h2>
+      <div id="summary"></div>
+      <div id="detail" class="detail" aria-live="polite"></div>
+      <div id="asr" class="asr"></div>
+    </section>
+
+    <section class="report" aria-labelledby="h-report">
+      <h2 id="h-report">Rapport pour Claude</h2>
+      <p>Les mesures ci-dessous sont faites dans ton navigateur ; aucun son n’est envoyé nulle part. Copie le rapport et colle-le dans ta conversation avec Claude : il pourra t’expliquer tes erreurs et te proposer des exercices.</p>
+      <textarea id="report" readonly rows="10" aria-label="Rapport à copier"></textarea>
+      <div class="controls">
+        <button id="btn-copy" type="button" disabled>Copier le rapport</button>
+        <button id="btn-save" type="button" disabled>Ajouter à « À retravailler »</button>
+      </div>
+      <p id="copy-msg" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <aside class="library" aria-labelledby="h-lib">
+    <h2 id="h-lib">Phrases</h2>
+    <nav id="lib" aria-label="Bibliothèque de phrases"></nav>
+    <details class="custom" id="custom">
+      <summary>Ta propre phrase</summary>
+      <form id="custom-form" autocomplete="off">
+        <label for="in-hanzi">Caractères chinois</label>
+        <input id="in-hanzi" lang="zh-CN" placeholder="我喜欢喝茶。">
+        <label for="in-pinyin">Pinyin avec les tons</label>
+        <input id="in-pinyin" placeholder="wǒ xǐhuan hē chá  ou  wo3 xi3huan he1 cha2">
+        <label for="in-fr">Traduction (facultatif)</label>
+        <input id="in-fr">
+        <p id="custom-hint" class="hint"></p>
+        <button type="submit">Utiliser cette phrase</button>
+        <p id="custom-msg" class="status" role="status"></p>
+      </form>
+    </details>
+    <section class="trends" aria-labelledby="h-trends">
+      <h2 id="h-trends">Tes tendances</h2>
+      <div id="trends"></div>
+    </section>
+  </aside>
+</div>
+<script>
+/* Portée — partie texte : pinyin, caractères, sandhi. */
+const PorteeText = (function () {
+  'use strict';
+
+  const VOWEL_MARKS = { a: 'āáǎà', e: 'ēéěè', i: 'īíǐì', o: 'ōóǒò', u: 'ūúǔù', 'ü': 'ǖǘǚǜ' };
+  const MARKED = new Map();
+  for (const v of Object.keys(VOWEL_MARKS)) {
+    [...VOWEL_MARKS[v]].forEach((m, k) => MARKED.set(m, { v, tone: k + 1 }));
+  }
+
+  // Inventaire des syllabes du mandarin standard, rangé par initiale.
+  const FINALS_BY_INITIAL = {
+    '': 'a ai an ang ao e ei en eng er o ou',
+    b: 'a ai an ang ao ei en eng i ian iao ie in ing o u',
+    p: 'a ai an ang ao ei en eng i ian iao ie in ing o ou u',
+    m: 'a ai an ang ao e ei en eng i ian iao ie in ing iu o ou u',
+    f: 'a an ang ei en eng o ou u',
+    d: 'a ai an ang ao e ei en eng i ia ian iao ie ing iu ong ou u uan ui un uo',
+    t: 'a ai an ang ao e eng i ian iao ie ing ong ou u uan ui un uo',
+    n: 'a ai an ang ao e ei en eng i ian iang iao ie in ing iu ong ou u uan un uo ü üe',
+    l: 'a ai an ang ao e ei eng i ia ian iang iao ie in ing iu o ong ou u uan un uo ü üe',
+    g: 'a ai an ang ao e ei en eng ong ou u ua uai uan uang ui un uo',
+    k: 'a ai an ang ao e ei en eng ong ou u ua uai uan uang ui un uo',
+    h: 'a ai an ang ao e ei en eng ong ou u ua uai uan uang ui un uo',
+    j: 'i ia ian iang iao ie in ing iong iu u uan ue un',
+    q: 'i ia ian iang iao ie in ing iong iu u uan ue un',
+    x: 'i ia ian iang iao ie in ing iong iu u uan ue un',
+    zh: 'a ai an ang ao e ei en eng i ong ou u ua uai uan uang ui un uo',
+    ch: 'a ai an ang ao e en eng i ong ou u ua uai uan uang ui un uo',
+    sh: 'a ai an ang ao e ei en eng i ou u ua uai uan uang ui un uo',
+    r: 'an ang ao e en eng i ong ou u ua uan ui un uo',
+    z: 'a ai an ang ao e ei en eng i ong ou u uan ui un uo',
+    c: 'a ai an ang ao e en eng i ong ou u uan ui un uo',
+    s: 'a ai an ang ao e en eng i ong ou u uan ui un uo',
+    y: 'a an ang ao e i in ing o ong ou u uan ue un',
+    w: 'a ai an ang ei en eng o u'
+  };
+  const SYLLABLES = new Set();
+  for (const [ini, fins] of Object.entries(FINALS_BY_INITIAL)) {
+    for (const f of fins.split(' ')) SYLLABLES.add(ini + f);
+  }
+  const INITIALS = ['zh', 'ch', 'sh', 'b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'r', 'z', 'c', 's', 'y', 'w'];
+
+  const PHRASE_BREAK = /[,.!?;:，。！？；：、…]/;
+  const HAN = /\p{Script=Han}/u;
+
+  function isErhua(p) {
+    return p.length > 2 && p.endsWith('r') && !SYLLABLES.has(p) && SYLLABLES.has(p.slice(0, -1));
+  }
+  function isSyllable(p) { return SYLLABLES.has(p) || isErhua(p); }
+  function coreBase(base) { return isErhua(base) ? base.slice(0, -1) : base; }
+
+  function splitInitial(base) {
+    const b = coreBase(base);
+    for (const ini of INITIALS) {
+      if (b.length > ini.length && b.startsWith(ini)) return { initial: ini, final: b.slice(ini.length) };
+    }
+    return { initial: '', final: b };
+  }
+
+  // Place l'accent de ton sur la bonne voyelle (a, puis e, puis o de « ou », sinon la dernière voyelle).
+  function addToneMark(base, tone) {
+    if (!(tone >= 1 && tone <= 4)) return base;
+    let i = base.indexOf('a');
+    if (i < 0) i = base.indexOf('e');
+    if (i < 0 && base.includes('ou')) i = base.indexOf('o');
+    if (i < 0) {
+      for (let k = base.length - 1; k >= 0; k--) {
+        if ('iouü'.includes(base[k])) { i = k; break; }
+      }
+    }
+    if (i < 0) return base;
+    return base.slice(0, i) + VOWEL_MARKS[base[i]][tone - 1] + base.slice(i + 1);
+  }
+
+  function stripMarks(s) {
+    let base = '', tone = 0;
+    for (const c of String(s).normalize('NFC').toLowerCase()) {
+      const m = MARKED.get(c);
+      if (m) { base += m.v; tone = m.tone; } else base += c;
+    }
+    return { base: base.replace(/v/g, 'ü').replace(/[^a-zü]/g, ''), tone };
+  }
+
+  // Découpe une suite de lettres sans espace (« xihuan ») en syllabes valides.
+  // Préfère le moins de syllabes possible ; au plus un accent par syllabe.
+  function splitLetters(base, marks) {
+    const n = base.length;
+    const cost = new Array(n + 1).fill(Infinity);
+    const from = new Array(n + 1).fill(-1);
+    cost[0] = 0;
+    for (let end = 1; end <= n; end++) {
+      for (let len = 1; len <= 7 && len <= end; len++) {
+        const start = end - len;
+        if (cost[start] === Infinity) continue;
+        const piece = base.slice(start, end);
+        if (!isSyllable(piece)) continue;
+        let accents = 0;
+        for (let k = start; k < end; k++) if (marks[k]) accents++;
+        if (accents > 1) continue;
+        let c = cost[start] + 1;
+        if (start > 0 && /^[aeo]/.test(piece)) c += 0.1;
+        if (isErhua(piece)) c += 1.2;
+        if (c < cost[end]) { cost[end] = c; from[end] = start; }
+      }
+    }
+    if (cost[n] === Infinity) return null;
+    const pieces = [];
+    let e = n;
+    while (e > 0) {
+      const s = from[e];
+      let mark = 0;
+      for (let k = s; k < e; k++) if (marks[k]) mark = marks[k];
+      pieces.unshift({ base: base.slice(s, e), mark });
+      e = s;
+    }
+    return pieces;
+  }
+
+  function splitRun(run) {
+    const parts = run.match(/[^0-5]+[0-5]?|[0-5]/g) || [];
+    const out = [];
+    for (const part of parts) {
+      const m = /^([^0-5]*)([0-5])?$/.exec(part);
+      const letters = m[1];
+      const digit = m[2] !== undefined ? Number(m[2]) : null;
+      if (!letters) return null;
+      let base = '';
+      const marks = [];
+      for (const c of letters) {
+        const mk = MARKED.get(c);
+        if (mk) { base += mk.v; marks.push(mk.tone); } else { base += c; marks.push(0); }
+      }
+      const pieces = splitLetters(base, marks);
+      if (!pieces) return null;
+      pieces.forEach((p, k) => {
+        let tone = p.mark;
+        let toned = p.mark > 0;
+        if (digit !== null && k === pieces.length - 1) {
+          tone = (digit === 5 || digit === 0) ? 0 : digit;
+          toned = true;
+        }
+        out.push({ base: p.base, tone, toned, breakAfter: false });
+      });
+    }
+    return out;
+  }
+
+  function parsePinyin(text) {
+    const s = String(text).normalize('NFC').toLowerCase().replace(/u:/g, 'ü').replace(/v/g, 'ü');
+    const isLetter = c => /[a-zü]/.test(c) || MARKED.has(c);
+    const syllables = [];
+    const bad = [];
+    let i = 0;
+    while (i < s.length) {
+      const c = s[i];
+      if (isLetter(c) || /[0-5]/.test(c)) {
+        let j = i;
+        while (j < s.length && (isLetter(s[j]) || /[0-5]/.test(s[j]))) j++;
+        const run = s.slice(i, j);
+        const found = splitRun(run);
+        if (found) syllables.push(...found); else bad.push(run);
+        i = j;
+        continue;
+      }
+      if (PHRASE_BREAK.test(c) && syllables.length) syllables[syllables.length - 1].breakAfter = true;
+      i++;
+    }
+    return { syllables, bad };
+  }
+
+  function extractHanzi(text) {
+    const chars = [];
+    let latin = 0;
+    for (const c of String(text || '').normalize('NFC')) {
+      if (HAN.test(c)) chars.push({ ch: c, breakAfter: false });
+      else if (PHRASE_BREAK.test(c)) { if (chars.length) chars[chars.length - 1].breakAfter = true; }
+      else if (/[A-Za-z0-9]/.test(c)) latin++;
+    }
+    return { chars, latin };
+  }
+
+  /* ---------- Sandhi ---------- */
+
+  const NO_SANDHI_BEFORE = '〇零一二三四五六七八九月号楼';
+  const NUMBER_CHARS = '〇零一二三四五六七八九十百千万';
+  const BU_NEUTRAL = ['对不起', '了不起', '差不多', '来不及', '看不起', '受不了'];
+
+  function applySandhi(input) {
+    const U = input.map(u => Object.assign({}, u, { surf: u.dict, alts: null, notes: [] }));
+    const n = U.length;
+    const next = i => (i + 1 < n && !U[i].breakAfter) ? U[i + 1] : null;
+    const prev = i => (i > 0 && !U[i - 1].breakAfter) ? U[i - 1] : null;
+
+    // 不
+    for (let i = 0; i < n; i++) {
+      const u = U[i];
+      if (!u.ch.startsWith('不') || u.base !== 'bu') continue;
+      const p = prev(i), q = next(i);
+      const word = (p ? p.ch : '') + '不' + (q ? q.ch.charAt(0) : '');
+      if (BU_NEUTRAL.includes(word)) {
+        u.surf = 0; u.notes.push('Dans ' + word + ', 不 se prononce au ton neutre.');
+      } else if (p && q && p.ch === q.ch) {
+        u.surf = 0; u.notes.push('Dans la forme « A 不 A », 不 se prononce au ton neutre.');
+      } else if (q && q.dict === 4 && u.dict === 4) {
+        u.surf = 2; u.notes.push('不 devant un 4e ton se prononce bú (2e ton).');
+      }
+    }
+
+    // 一
+    for (let i = 0; i < n; i++) {
+      const u = U[i];
+      if (!u.ch.startsWith('一') || u.base !== 'yi' || u.dict === 0) continue;
+      const p = prev(i), q = next(i);
+      const q2 = q ? next(i + 1) : null;
+      if (p && (p.ch === '第' || p.ch === '初' || NUMBER_CHARS.includes(p.ch))) {
+        u.surf = 1; u.notes.push('一 ordinal ou à l’intérieur d’un nombre : il reste yī.');
+      } else if (q && (NO_SANDHI_BEFORE.includes(q.ch) || (q.ch === '年' && q2 && q2.ch === '级'))) {
+        u.surf = 1; u.notes.push('一 dans une date, un numéro ou une suite de chiffres : il reste yī.');
+      } else if (!q) {
+        u.surf = 1;
+      } else if (p && p.ch === q.ch) {
+        u.surf = 0; u.notes.push('Dans la forme « A 一 A », 一 se prononce au ton neutre.');
+      } else if (q.ch === '个' || q.dict === 4) {
+        u.surf = 2; u.notes.push('一 devant un 4e ton (ou devant 个) se prononce yí (2e ton).');
+      } else if (q.dict >= 1 && q.dict <= 3) {
+        u.surf = 4; u.notes.push('一 devant un 1er, 2e ou 3e ton se prononce yì (4e ton).');
+      }
+    }
+
+    // 3e ton + 3e ton
+    let i = 0;
+    while (i < n) {
+      if (U[i].surf !== 3) { i++; continue; }
+      let j = i;
+      while (j + 1 < n && !U[j].breakAfter && U[j + 1].surf === 3) j++;
+      if (j > i) {
+        U[j - 1].surf = 2;
+        U[j - 1].notes.push('3e ton suivi d’un autre 3e ton : il se prononce comme un 2e ton.');
+        for (let m = i; m <= j - 2; m++) {
+          U[m].surf = 2;
+          U[m].alts = ['2', '3H'];
+          U[m].notes.push('Suite de 3e tons : selon le découpage de la phrase, celui-ci se dit en 2e ton ou en demi-3e ton. Les deux sont acceptés.');
+        }
+      }
+      i = j + 1;
+    }
+
+    for (let k = 0; k < n; k++) {
+      const u = U[k];
+      const q = next(k);
+      const p = prev(k);
+      if (u.surf === 3) {
+        if (q) {
+          u.code = '3H';
+          u.notes.push('3e ton devant une autre syllabe : demi-3e ton, qui reste grave sans remonter.');
+        } else {
+          u.code = '3F';
+        }
+      } else {
+        u.code = String(u.surf);
+      }
+      u.sandhi = u.surf !== u.dict;
+      u.groupStart = !p;
+      u.groupEnd = !q;
+    }
+    return U;
+  }
+
+  /* ---------- Construction de la cible ---------- */
+
+  // converter(texte) -> [{ch, base, tone}] pour chaque caractère chinois, dans l'ordre.
+  function buildTarget(spec, converter) {
+    let hanziText = spec.hanzi || '';
+    let pinyinText = spec.pinyin || '';
+    let hz = extractHanzi(hanziText);
+    if (!hz.chars.length && !pinyinText.trim() && /[a-zA-Zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/.test(hanziText)) {
+      pinyinText = hanziText; hanziText = ''; hz = extractHanzi('');
+    }
+    let syls, source;
+    if (pinyinText.trim()) {
+      const p = parsePinyin(pinyinText);
+      if (p.bad.length) return { error: 'Pinyin non reconnu : « ' + p.bad.join(' ') + ' ». Vérifie l’orthographe.' };
+      if (!p.syllables.length) return { error: 'Aucune syllabe trouvée dans le pinyin.' };
+      if (!p.syllables.some(x => x.toned)) return { error: 'Indique les tons dans le pinyin : accents (hǎo) ou chiffres (hao3).' };
+      syls = p.syllables.map(x => ({ base: x.base, tone: x.tone, breakAfter: x.breakAfter }));
+      source = 'pinyin';
+    } else if (hz.chars.length) {
+      if (typeof converter !== 'function') {
+        return { error: 'La conversion automatique en pinyin n’est pas disponible (pas de connexion ?). Ajoute le pinyin avec les tons.' };
+      }
+      let conv;
+      try { conv = converter(hanziText); } catch (e) { conv = null; }
+      if (!conv || conv.length !== hz.chars.length) {
+        return { error: 'La conversion automatique en pinyin a échoué. Ajoute le pinyin avec les tons.' };
+      }
+      syls = conv.map((c, k) => ({ base: c.base, tone: c.tone, breakAfter: hz.chars[k].breakAfter }));
+      source = 'auto';
+    } else {
+      return { error: 'Écris une phrase en caractères chinois, en pinyin, ou les deux.' };
+    }
+
+    let chars = hz.chars.map(c => Object.assign({}, c));
+    const warnings = [];
+    if (source === 'auto') {
+      const cs = [], ss = [];
+      chars.forEach((c, k) => {
+        const s = syls[k];
+        if (c.ch === '儿' && cs.length && s.base === 'er' && s.tone === 0) {
+          cs[cs.length - 1].ch += '儿';
+          cs[cs.length - 1].breakAfter = c.breakAfter;
+          ss[ss.length - 1].base += 'r';
+          ss[ss.length - 1].breakAfter = s.breakAfter;
+        } else {
+          cs.push(Object.assign({}, c));
+          ss.push(Object.assign({}, s));
+        }
+      });
+      chars = cs; syls = ss;
+    } else if (chars.length && chars.length !== syls.length) {
+      const merged = [];
+      for (const c of chars) {
+        if (c.ch === '儿' && merged.length) {
+          merged[merged.length - 1].ch += '儿';
+          merged[merged.length - 1].breakAfter = c.breakAfter;
+        } else merged.push(Object.assign({}, c));
+      }
+      if (merged.length === syls.length) chars = merged;
+    }
+    if (chars.length && chars.length !== syls.length) {
+      warnings.push('Il y a ' + chars.length + ' caractères mais ' + syls.length + ' syllabes dans le pinyin : seul le pinyin est utilisé.');
+      chars = [];
+    }
+    if (hz.latin && hz.chars.length) warnings.push('Les lettres et chiffres latins mêlés aux caractères sont ignorés.');
+
+    const units = syls.map((s, k) => {
+      const ch = chars.length ? chars[k].ch : '';
+      let dict = s.tone;
+      if (ch.startsWith('一') && s.base === 'yi' && dict !== 0) dict = 1;
+      if (ch.startsWith('不') && s.base === 'bu' && dict !== 0) dict = 4;
+      const brk = !!(s.breakAfter || (chars.length && chars[k].breakAfter));
+      return { ch, base: s.base, dict, breakAfter: k < syls.length - 1 ? brk : false };
+    });
+    return { units: applySandhi(units), source, warnings };
+  }
+
+  function surfaceTone(u) {
+    return u.code === '3F' || u.code === '3H' ? 3 : Number(u.code);
+  }
+  function dictPinyin(u) { return addToneMark(u.base, u.dict); }
+  function surfPinyin(u) { return addToneMark(u.base, surfaceTone(u)); }
+
+  return {
+    SYLLABLES, HAN, PHRASE_BREAK,
+    isSyllable, coreBase, splitInitial, addToneMark, stripMarks,
+    parsePinyin, extractHanzi, applySandhi, buildTarget,
+    surfaceTone, dictPinyin, surfPinyin
+  };
+})();
+
+/* Portée — partie audio : filtrage, hauteur (méthode par différences normalisées), découpage. */
+const PorteeAudio = (function () {
+  'use strict';
+
+  const FRAME_MS = 10;
+
+  function percentile(values, p) {
+    if (!values.length) return NaN;
+    const a = Float64Array.from(values).sort();
+    const pos = (a.length - 1) * p / 100;
+    const lo = Math.floor(pos), hi = Math.ceil(pos);
+    return a[lo] + (a[hi] - a[lo]) * (pos - lo);
+  }
+  function median(values) { return percentile(values, 50); }
+
+  // Filtres biquadratiques (formules classiques du « cookbook » RBJ).
+  function biquad(kind, fc, fs, q) {
+    const w = 2 * Math.PI * fc / fs;
+    const cw = Math.cos(w);
+    const alpha = Math.sin(w) / (2 * q);
+    const a0 = 1 + alpha;
+    let b0, b1;
+    if (kind === 'lowpass') { b0 = (1 - cw) / 2; b1 = 1 - cw; }
+    else { b0 = (1 + cw) / 2; b1 = -(1 + cw); }
+    return { b0: b0 / a0, b1: b1 / a0, b2: b0 / a0, a1: -2 * cw / a0, a2: (1 - alpha) / a0 };
+  }
+  function runFilter(buf, c) {
+    let x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    for (let i = 0; i < buf.length; i++) {
+      const x0 = buf[i];
+      const y0 = c.b0 * x0 + c.b1 * x1 + c.b2 * x2 - c.a1 * y1 - c.a2 * y2;
+      x2 = x1; x1 = x0; y2 = y1; y1 = y0;
+      buf[i] = y0;
+    }
+  }
+
+  // Garde la bande utile à la hauteur (60 Hz – 1 kHz) et rééchantillonne à 8 kHz.
+  function toAnalysisRate(samples, sr) {
+    const buf = Float32Array.from(samples);
+    runFilter(buf, biquad('highpass', 60, sr, Math.SQRT1_2));
+    runFilter(buf, biquad('lowpass', 1000, sr, 0.5412));
+    runFilter(buf, biquad('lowpass', 1000, sr, 1.3066));
+    const outSr = 8000;
+    const step = sr / outSr;
+    const len = Math.max(0, Math.floor((buf.length - 2) / step));
+    const out = new Float32Array(len);
+    for (let k = 0; k < len; k++) {
+      const pos = k * step;
+      const i = Math.floor(pos);
+      const fr = pos - i;
+      out[k] = buf[i] * (1 - fr) + buf[i + 1] * fr;
+    }
+    return { x: out, sr: outSr };
+  }
+
+  // Une estimation de hauteur toutes les 10 ms. Pour chaque trame, on compare le signal
+  // à lui-même décalé de « lag » échantillons ; la période est le premier décalage
+  // où la différence normalisée devient faible.
+  function trackPitch(x, sr) {
+    const hop = Math.round(sr * FRAME_MS / 1000);
+    const win = Math.round(sr * 0.032);
+    const minLag = Math.floor(sr / 650);
+    const maxLag = Math.ceil(sr / 60);
+    const half = (win + maxLag) >> 1;
+    const padded = new Float32Array(x.length + 2 * half + win + maxLag + 4);
+    padded.set(x, half);
+    const count = Math.floor(x.length / hop);
+    const f0 = new Float32Array(count);
+    const aperiodicity = new Float32Array(count);
+    const energyDb = new Float32Array(count);
+    const diff = new Float64Array(maxLag + 2);
+    const norm = new Float64Array(maxLag + 2);
+    const threshold = 0.15;
+
+    for (let t = 0; t < count; t++) {
+      const s = t * hop;
+      const eStart = s + (maxLag >> 1);
+      let energy = 0;
+      for (let j = 0; j < win; j++) { const v = padded[eStart + j]; energy += v * v; }
+      energyDb[t] = 10 * Math.log10(energy / win + 1e-12);
+
+      for (let lag = 1; lag <= maxLag + 1; lag++) {
+        let acc = 0;
+        for (let j = 0; j < win; j++) {
+          const d = padded[s + j] - padded[s + j + lag];
+          acc += d * d;
+        }
+        diff[lag] = acc;
+      }
+      let running = 0;
+      norm[0] = 1;
+      for (let lag = 1; lag <= maxLag + 1; lag++) {
+        running += diff[lag];
+        norm[lag] = running > 0 ? diff[lag] * lag / running : 1;
+      }
+      let best = -1;
+      for (let lag = minLag; lag <= maxLag; lag++) {
+        if (norm[lag] < threshold) {
+          while (lag + 1 <= maxLag && norm[lag + 1] < norm[lag]) lag++;
+          best = lag;
+          break;
+        }
+      }
+      if (best < 0) {
+        let lowest = Infinity;
+        for (let lag = minLag; lag <= maxLag; lag++) {
+          if (norm[lag] < lowest) { lowest = norm[lag]; best = lag; }
+        }
+      }
+      const a = norm[best - 1], b = norm[best], c = norm[best + 1];
+      const curv = a - 2 * b + c;
+      let shift = curv > 0 ? 0.5 * (a - c) / curv : 0;
+      if (shift > 1) shift = 1; else if (shift < -1) shift = -1;
+      f0[t] = sr / (best + shift);
+      aperiodicity[t] = b;
+    }
+    return { f0, aperiodicity, energyDb, count };
+  }
+
+  function runsOf(mask, from, to) {
+    const runs = [];
+    let start = -1;
+    for (let t = from; t <= to; t++) {
+      const on = t <= to - 0 && t < mask.length && mask[t];
+      if (on && start < 0) start = t;
+      if ((!on || t === to) && start >= 0) {
+        runs.push({ s: start, e: on ? t : t - 1 });
+        start = -1;
+      }
+    }
+    return runs;
+  }
+
+  function dropShortRuns(voiced, st, minLen) {
+    for (const r of runsOf(voiced, 0, voiced.length - 1)) {
+      if (r.e - r.s + 1 < minLen) {
+        for (let t = r.s; t <= r.e; t++) { voiced[t] = 0; st[t] = NaN; }
+      }
+    }
+  }
+
+  function smoothWithin(st, voiced, radius, useMedian) {
+    const src = Float32Array.from(st);
+    for (const r of runsOf(voiced, 0, voiced.length - 1)) {
+      for (let t = r.s; t <= r.e; t++) {
+        const vals = [];
+        for (let u = Math.max(r.s, t - radius); u <= Math.min(r.e, t + radius); u++) vals.push(src[u]);
+        st[t] = useMedian ? median(vals) : vals.reduce((p, q) => p + q, 0) / vals.length;
+      }
+    }
+  }
+
+  // Nettoie la piste : voisement, erreurs d'octave, lissage. Sortie en demi-tons (réf. 100 Hz).
+  function cleanTrack(raw) {
+    const n = raw.count;
+    const db = raw.energyDb;
+    const dbList = Array.from(db);
+    const top = percentile(dbList, 99);
+    const floor = percentile(dbList, 10);
+    const thr = Math.min(Math.max(floor + 10, top - 35), top - 20);
+    const voiced = new Uint8Array(n);
+    const st = new Float32Array(n).fill(NaN);
+    for (let t = 0; t < n; t++) {
+      const f = raw.f0[t];
+      if (db[t] > thr && raw.aperiodicity[t] < 0.3 && f >= 60 && f <= 650) {
+        voiced[t] = 1;
+        st[t] = 12 * Math.log2(f / 100);
+      }
+    }
+    dropShortRuns(voiced, st, 3);
+
+    const all = [];
+    for (let t = 0; t < n; t++) if (voiced[t]) all.push(st[t]);
+    if (all.length) {
+      const gm = median(all);
+      for (let t = 0; t < n; t++) {
+        if (!voiced[t]) continue;
+        let v = st[t];
+        if (v - gm > 10) v -= 12; else if (gm - v > 10) v += 12;
+        if (Math.abs(v - gm) > 12) { voiced[t] = 0; st[t] = NaN; } else st[t] = v;
+      }
+      for (let t = 0; t < n; t++) {
+        if (!voiced[t]) continue;
+        const near = [];
+        for (let u = Math.max(0, t - 8); u <= Math.min(n - 1, t + 8); u++) if (voiced[u] && u !== t) near.push(st[u]);
+        if (near.length < 3) continue;
+        const lm = median(near);
+        let v = st[t];
+        if (v - lm > 8) v -= 12; else if (lm - v > 8) v += 12;
+        if (Math.abs(v - lm) > 6) { voiced[t] = 0; st[t] = NaN; } else st[t] = v;
+      }
+    }
+    dropShortRuns(voiced, st, 3);
+    smoothWithin(st, voiced, 2, true);
+    smoothWithin(st, voiced, 1, false);
+    const loud = new Uint8Array(n);
+    for (let t = 0; t < n; t++) loud[t] = db[t] > thr ? 1 : 0;
+    return { st, voiced, loud, db, thr, n };
+  }
+
+  function movingAverage(a, radius) {
+    const out = new Float32Array(a.length);
+    for (let t = 0; t < a.length; t++) {
+      let s = 0, c = 0;
+      for (let u = Math.max(0, t - radius); u <= Math.min(a.length - 1, t + radius); u++) { s += a[u]; c++; }
+      out[t] = s / c;
+    }
+    return out;
+  }
+
+  // Découpe la parole en autant de segments que de syllabes attendues.
+  // Coupures candidates : silences et consonnes sourdes, creux d'énergie, sauts de hauteur,
+  // plus une grille de secours ; programmation dynamique avec un a priori sur les durées.
+  function segment(trk, weights) {
+    const N = weights.length;
+    const { voiced, db, st, n } = trk;
+    const all = runsOf(voiced, 0, n - 1);
+    const runs = all.filter((r, k) => {
+      if (r.e - r.s + 1 >= 6) return true;
+      const before = k > 0 ? r.s - all[k - 1].e : Infinity;
+      const after = k < all.length - 1 ? all[k + 1].s - r.e : Infinity;
+      return Math.min(before, after) < 40;
+    });
+    if (!runs.length) return { error: 'silence' };
+    const keep = new Uint8Array(n);
+    for (const r of runs) for (let t = r.s; t <= r.e; t++) keep[t] = 1;
+    const F = runs[0].s, L = runs[runs.length - 1].e;
+    const pre = new Int32Array(n + 1);
+    for (let t = 0; t < n; t++) pre[t + 1] = pre[t] + keep[t];
+    const V = pre[L + 1] - pre[F];
+    if (V < N * 3) return { error: 'short' };
+    if (N === 1) return { segments: [{ a: F, b: L + 1 }], runs, keep, F, L };
+
+    const cand = new Map();
+    const add = (pos, strength) => {
+      if (pos <= F || pos > L) return;
+      const old = cand.get(pos);
+      if (old === undefined || strength > old) cand.set(pos, strength);
+    };
+    for (let k = 0; k + 1 < runs.length; k++) {
+      const a = runs[k], b = runs[k + 1];
+      const gap = b.s - a.e - 1;
+      let edge = 0, ce = 0;
+      for (let t = Math.max(a.s, a.e - 2); t <= a.e; t++) { edge += db[t]; ce++; }
+      for (let t = b.s; t <= Math.min(b.e, b.s + 2); t++) { edge += db[t]; ce++; }
+      edge /= ce;
+      let inGap = 0;
+      for (let t = a.e + 1; t < b.s; t++) inGap += db[t];
+      inGap /= Math.max(1, gap);
+      const drop = edge - inGap;
+      let strength;
+      if (gap >= 15) strength = 4;
+      else if (drop > 12) strength = 3 + gap / 15;
+      else if (drop > 6) strength = 2;
+      else strength = 0.9;
+      add(a.e + 1 + (gap >> 1), strength);
+    }
+    const sm = movingAverage(db, 2);
+    for (const r of runs) {
+      for (let t = r.s + 2; t <= r.e - 2; t++) {
+        if (!(sm[t] <= sm[t - 1] && sm[t] <= sm[t + 1])) continue;
+        let lp = -Infinity, rp = -Infinity;
+        for (let u = Math.max(r.s, t - 12); u < t; u++) lp = Math.max(lp, sm[u]);
+        for (let u = t + 1; u <= Math.min(r.e, t + 12); u++) rp = Math.max(rp, sm[u]);
+        const depth = Math.min(lp, rp) - sm[t];
+        if (depth >= 1) add(t, Math.min(2.4, 0.35 + depth / 3.5));
+      }
+      for (let t = r.s + 1; t < r.e; t++) {
+        if (Math.abs(st[t + 1] - st[t - 1]) > 2) add(t, 0.6);
+      }
+      for (let t = r.s + 2; t <= r.e - 1; t += 2) add(t, 0);
+    }
+    const C = [...cand.entries()].sort((p, q) => p[0] - q[0]);
+    const M = C.length;
+    if (M < N - 1) return { error: 'short' };
+
+    const wSum = weights.reduce((p, q) => p + q, 0);
+    const expected = weights.map(w => V * w / wSum);
+    const cost = (i, v) => {
+      if (v < 3) return Infinity;
+      const r = Math.log((v + 2) / (expected[i] + 2));
+      return 1.6 * r * r;
+    };
+    const K = N - 1;
+    const score = Array.from({ length: K }, () => new Float64Array(M).fill(-Infinity));
+    const back = Array.from({ length: K }, () => new Int32Array(M).fill(-1));
+    for (let j = 0; j < M; j++) {
+      const c = cost(0, pre[C[j][0]] - pre[F]);
+      if (c < Infinity) score[0][j] = C[j][1] - c;
+    }
+    for (let k = 1; k < K; k++) {
+      for (let j = 0; j < M; j++) {
+        let best = -Infinity, arg = -1;
+        for (let i = 0; i < j; i++) {
+          const prev = score[k - 1][i];
+          if (prev === -Infinity) continue;
+          const c = cost(k, pre[C[j][0]] - pre[C[i][0]]);
+          if (c === Infinity) continue;
+          const s = prev + C[j][1] - c;
+          if (s > best) { best = s; arg = i; }
+        }
+        score[k][j] = best;
+        back[k][j] = arg;
+      }
+    }
+    let best = -Infinity, arg = -1;
+    for (let j = 0; j < M; j++) {
+      if (score[K - 1][j] === -Infinity) continue;
+      const c = cost(K, pre[L + 1] - pre[C[j][0]]);
+      if (c === Infinity) continue;
+      const s = score[K - 1][j] - c;
+      if (s > best) { best = s; arg = j; }
+    }
+    if (arg < 0) return { error: 'short' };
+    const cuts = [];
+    let j = arg;
+    for (let k = K - 1; k >= 0; k--) { cuts.unshift(C[j][0]); j = back[k][j]; }
+    const bounds = [F, ...cuts, L + 1];
+    return {
+      segments: bounds.slice(0, -1).map((a, i) => ({ a, b: bounds[i + 1] })),
+      runs, keep, F, L
+    };
+  }
+
+  // Courbe d'une syllabe : 9 points régulièrement espacés sur sa partie voisée.
+  function contour(trk, seg, keep) {
+    const frames = [];
+    for (let t = seg.a; t < seg.b; t++) if (keep[t] && trk.voiced[t]) frames.push(t);
+    if (frames.length < 3) return { ok: false, voicedCount: frames.length };
+    let lo = 0, hi = frames.length - 1;
+    if (frames.length >= 12) { lo = 2; hi -= 1; } else if (frames.length >= 7) lo = 1;
+    const core = frames.slice(lo, hi + 1);
+    const t0 = core[0], t1 = core[core.length - 1];
+    const points = [];
+    for (let k = 0; k < 9; k++) {
+      const at = t0 + (t1 - t0) * k / 8;
+      let i = 0;
+      while (i + 1 < core.length && core[i + 1] <= at) i++;
+      const a = core[i], b = core[Math.min(i + 1, core.length - 1)];
+      const w = b === a ? 0 : (at - a) / (b - a);
+      points.push(trk.st[a] * (1 - w) + trk.st[b] * w);
+    }
+    let rough = 0;
+    for (let t = t0; t <= t1; t++) if (!trk.voiced[t] && trk.loud[t]) rough++;
+    return {
+      ok: true,
+      frames,
+      t0: frames[0],
+      t1: frames[frames.length - 1],
+      st9: points,
+      durMs: (frames[frames.length - 1] - frames[0] + 1) * FRAME_MS,
+      creak: rough / (t1 - t0 + 1)
+    };
+  }
+
+  return { FRAME_MS, percentile, median, toAnalysisRate, trackPitch, cleanTrack, segment, contour, runsOf };
+})();
+
+/* Portée — évaluation des tons, analyse complète, rapport, comparaison avec la reconnaissance vocale. */
+const PorteeEval = (function (T, A) {
+  'use strict';
+
+  const LABEL = { '1': '1er ton', '2': '2e ton', '3F': '3e ton', '3H': 'demi-3e ton', '4': '4e ton', '0': 'ton neutre' };
+
+  // Formes de référence sur l'échelle de Chao (1 = grave, 5 = aigu), 9 points par syllabe.
+  const SHAPES = {
+    '1': [4.7, 4.75, 4.8, 4.8, 4.8, 4.8, 4.75, 4.7, 4.65],
+    '2': [3.1, 2.9, 2.9, 3.1, 3.4, 3.8, 4.2, 4.6, 4.9],
+    '3F': [2.4, 2.0, 1.6, 1.25, 1.05, 1.1, 1.5, 2.3, 3.2],
+    '3H': [2.4, 2.1, 1.8, 1.5, 1.3, 1.15, 1.05, 1.0, 1.0],
+    '4': [4.9, 4.85, 4.6, 4.2, 3.7, 3.1, 2.5, 1.9, 1.4]
+  };
+  function neutralShape(prevCode) {
+    const lv = prevCode === '1' ? 2.4 : prevCode === '2' ? 3.0
+      : (prevCode === '3F' || prevCode === '3H') ? 3.6 : prevCode === '4' ? 1.6 : 2.8;
+    return Array.from({ length: 9 }, (_, k) => lv - 0.3 * k / 8);
+  }
+  function shapeFor(code, prevCode) { return code === '0' ? neutralShape(prevCode) : SHAPES[code]; }
+
+  function features(L) {
+    const n = L.length;
+    let min = Infinity, iMin = 0, max = -Infinity, iMax = 0, sum = 0;
+    L.forEach((v, i) => {
+      if (v < min) { min = v; iMin = i; }
+      if (v > max) { max = v; iMax = i; }
+      sum += v;
+    });
+    const start = (L[0] + L[1]) / 2, end = (L[n - 2] + L[n - 1]) / 2;
+    return {
+      start, end, min, max, mean: sum / n,
+      pMin: iMin / (n - 1), pMax: iMax / (n - 1),
+      net: end - start, riseFromMin: end - min, fallToMin: start - min, range: max - min
+    };
+  }
+
+  function evalCode(L, code, c) {
+    const f = features(L);
+    const issues = [];
+    let penalty = 0;
+    const add = (sev, pts, text) => { issues.push({ sev, text }); penalty += pts; };
+    const lw = c.calibrated ? 1 : 0.5;
+    const decl = Math.min(0.6, 0.18 * c.tSec);
+    let tip = '';
+    switch (code) {
+      case '1': {
+        if (f.mean < 3.4 - decl) add('major', 35 * lw, 'Trop bas : le 1er ton se tient en haut de ta voix.');
+        else if (f.mean < 4.0 - decl) add('minor', 12 * lw, 'Un peu bas : place la note plus haut.');
+        if (f.net <= -1.3) add('major', 50, 'La voix descend : on entend un 4e ton.');
+        else if (f.net < -0.6) add('minor', 12, 'La note retombe en fin de syllabe.');
+        else if (f.net >= 1.3) add('major', 50, 'La voix monte : on entend un 2e ton.');
+        else if (f.net > 0.6) add('minor', 12, 'La note monte légèrement.');
+        else if (f.range > 1.4) add('minor', 10, 'Hauteur instable au milieu de la syllabe.');
+        tip = 'Tiens une note haute et plate, comme une note chantée, jusqu’au bout de la syllabe.';
+        break;
+      }
+      case '2': {
+        const early = Math.min(...L.slice(0, 6));
+        const rise = f.end - early;
+        if (rise < 0.8) add('major', 55, f.mean >= 3.5 ? 'Pas de vraie montée : on entend plutôt un 1er ton.' : 'Pas de vraie montée : la voix reste à plat.');
+        else if (rise < 1.4) add('minor', 15, 'Montée trop timide : elle doit s’entendre nettement.');
+        if (f.end < 3.3 - decl) add('minor', 12 * lw, 'La montée ne va pas assez haut.');
+        if (f.pMin > 0.55 && f.fallToMin >= 0.7) add('major', 35, 'La voix descend d’abord trop longtemps : ça ressemble à un 3e ton.');
+        if (f.pMax < 0.75 && f.max - f.end >= 0.8) add('minor', 10, 'La voix retombe à la fin.');
+        tip = 'Pars du milieu de ta voix et monte franchement jusqu’en haut, comme un « Hein ? » étonné.';
+        break;
+      }
+      case '3F': {
+        const soft = c.creak > 0.15 ? 0.5 : 1;
+        if (f.min > 2.6) add('major', 45 * lw * soft, 'Ne descend pas dans le bas de ta voix : le 3e ton est un ton grave.');
+        else if (f.min > 2.0) add('minor', 15 * lw * soft, 'Pas assez bas : descends davantage.');
+        if (f.pMin < 0.25 && f.riseFromMin >= 1.2) add('major', 40, 'Remonte trop tôt : ça ressemble à un 2e ton.');
+        if (f.start >= 3.8 && f.fallToMin >= 2.2 && f.riseFromMin < 0.5) add('major', 45, 'Part du haut et ne fait que descendre : ça ressemble à un 4e ton.');
+        if (f.riseFromMin < 0.8) {
+          if (c.isolated) add('minor', 15, 'Prononcé seul, le 3e ton remonte à la fin : laisse la voix remonter.');
+          else add('info', 4, 'En fin de phrase, la remontée finale est possible mais pas obligatoire en parole rapide.');
+        }
+        if (c.creak > 0.15) add('info', 0, 'Voix craquée détectée au creux : c’est courant, et même typique, pour un 3e ton.');
+        tip = 'Descends tout en bas de ta voix, voix grave et relâchée (elle peut craquer), puis laisse-la remonter un peu.';
+        break;
+      }
+      case '3H': {
+        const soft = c.creak > 0.15 ? 0.5 : 1;
+        if (f.min > 2.6) add('major', 45 * lw * soft, 'Reste trop haut : le 3e ton doit descendre dans le grave.');
+        else if (f.min > 2.0) add('minor', 15 * lw * soft, 'Pas assez bas : descends davantage.');
+        if (f.riseFromMin > 1.3) add('major', 35, 'Remonte : devant une autre syllabe, le 3e ton reste grave, sans remontée (demi-3e ton).');
+        else if (f.riseFromMin > 0.8) add('minor', 10, 'Légère remontée : reste en bas jusqu’à la syllabe suivante.');
+        if (f.start >= 4.0 && f.fallToMin >= 2.0) add('minor', 15, 'Commence trop haut : ça tire vers un 4e ton.');
+        if (c.creak > 0.15) add('info', 0, 'Voix craquée détectée : c’est normal pour un 3e ton.');
+        tip = 'Reste dans le grave, voix détendue, et enchaîne sur la syllabe suivante sans remonter.';
+        break;
+      }
+      case '4': {
+        const late = Math.min(...L.slice(5));
+        const fall = f.start - late;
+        const need = c.next === '4' ? 1.3 : 1.8;
+        if (f.start < 3.2 - decl) add('major', 30 * lw, 'Commence trop bas : le 4e ton part du haut de ta voix.');
+        else if (f.start < 3.8 - decl) add('minor', 10 * lw, 'Commence un peu bas.');
+        if (fall < 1.0) add('major', 55, f.start >= 3.5 ? 'Ne descend presque pas : on entend un 1er ton.' : 'Ne descend presque pas : la voix reste à plat.');
+        else if (fall < need) add('minor', 15, 'Chute trop faible : fais tomber la voix plus franchement.');
+        if (f.riseFromMin > 0.8 && f.pMin < 0.8) add('minor', 10, 'La voix remonte à la fin.');
+        tip = 'Attaque en haut et laisse tomber la voix d’un coup, comme un « Non ! » ferme.';
+        break;
+      }
+      default: {
+        const ratio = c.durMs / c.refDur;
+        if (ratio > 1.15) add('major', 25, 'Trop long, comme un ton plein : le ton neutre est bref et léger.');
+        else if (ratio > 0.85) add('minor', 10, 'Un peu long : raccourcis cette syllabe.');
+        const p = c.prev;
+        if (p) {
+          if (p.code === '3F' || p.code === '3H') {
+            if (f.mean < p.min + 0.4) add('minor', 15, 'Après un 3e ton, le ton neutre remonte : il doit être plus haut que le creux du 3e ton.');
+          } else if ((p.code === '1' || p.code === '2') && f.start > p.end - 0.3) {
+            add('minor', 15, 'Devrait être plus bas que la fin de la syllabe précédente.');
+          }
+          if (p.code === '4' && f.mean > 2.8) add('minor', 8 * lw, 'Après un 4e ton, le ton neutre est grave.');
+        }
+        if (Math.abs(f.net) > 1.8) add('minor', 10, 'Porte une vraie mélodie : garde-le neutre et court.');
+        tip = 'Dis-la vite et sans effort : sa hauteur découle simplement de la syllabe précédente.';
+      }
+    }
+    const order = { major: 0, minor: 1, info: 2 };
+    issues.sort((a, b) => order[a.sev] - order[b.sev]);
+    return { code, score: Math.max(0, Math.round(100 - penalty)), issues, tip };
+  }
+
+  const TONE_CODES = ['1', '2', '3F', '3H', '4'];
+
+  function evaluateSyllable(L, c) {
+    const codes = c.alts && c.alts.length ? c.alts : [c.code];
+    let best = null;
+    for (const code of codes) {
+      const r = evalCode(L, code, c);
+      if (!best || r.score > best.score) best = r;
+    }
+    best.looksLike = null;
+    // « Ressemble à » seulement si la courbe passe vraiment le test d'un autre ton.
+    if (c.code !== '0' && best.score < 75) {
+      let other = null;
+      for (const k of TONE_CODES) {
+        if (codes.includes(k)) continue;
+        if (k.startsWith('3') && codes.some(x => x.startsWith('3'))) continue;
+        const r = evalCode(L, k, Object.assign({}, c, { isolated: false }));
+        if (!other || r.score > other.score) other = r;
+      }
+      if (other && other.score >= 75 && other.score - best.score >= 25) {
+        best.looksLike = other.code;
+        best.score = Math.min(best.score, 45);
+      }
+    }
+    best.verdict = best.score >= 75 ? 'ok' : best.score >= 50 ? 'moyen' : 'faux';
+    return best;
+  }
+
+  function chooseRange(values, opts) {
+    const own = {
+      p5: A.percentile(values, 5),
+      p95: A.percentile(values, 95),
+      med: A.percentile(values, 50)
+    };
+    if (opts.forceOwn) return { lo: own.p5, hi: own.p95, source: 'calibration en cours', calibrated: true, own };
+    if (opts.calib && isFinite(opts.calib.lo)) return { lo: opts.calib.lo, hi: opts.calib.hi, source: 'calibration', calibrated: true, own };
+    if (opts.auto && isFinite(opts.auto.lo)) return { lo: opts.auto.lo, hi: opts.auto.hi, source: 'tes derniers enregistrements', calibrated: true, own };
+    let lo = own.p5, hi = own.p95;
+    if (hi - lo < 10) { const mid = (hi + lo) / 2; lo = mid - 5; hi = mid + 5; }
+    return { lo, hi, source: 'cet enregistrement seul', calibrated: false, own };
+  }
+
+  const stToHz = st => 100 * Math.pow(2, st / 12);
+
+  function analyze(samples, sr, units, opts) {
+    opts = opts || {};
+    const warnings = [];
+    if (samples.length < sr * 0.25) return { error: 'L’enregistrement est trop court.' };
+    let peak = 0, clipped = 0;
+    for (let i = 0; i < samples.length; i++) {
+      const a = Math.abs(samples[i]);
+      if (a > peak) peak = a;
+      if (a > 0.985) clipped++;
+    }
+    if (peak < 0.003) return { error: 'Je n’entends presque rien : vérifie que le bon micro est sélectionné et rapproche-toi.' };
+    if (peak < 0.03) warnings.push('Niveau d’entrée faible : rapproche-toi du micro pour une mesure plus fiable.');
+    if (clipped > samples.length * 0.002) warnings.push('Le son sature : éloigne-toi un peu du micro ou parle moins fort.');
+
+    const low = A.toAnalysisRate(samples, sr);
+    const trk = A.cleanTrack(A.trackPitch(low.x, low.sr));
+    const weights = units.map(u => (u.code === '0' ? 0.55 : 1));
+    const seg = A.segment(trk, weights);
+    if (seg.error === 'silence') return { error: 'Aucune voix détectée : parle plus fort ou plus près du micro.' };
+    if (seg.error) return { error: 'Trop peu de voix détectée pour ' + units.length + ' syllabe' + (units.length > 1 ? 's' : '') + '. Recommence en prononçant toute la phrase.' };
+    const pieces = seg.runs.filter(r => r.e - r.s + 1 >= 5).length;
+    if (pieces > units.length + 2) warnings.push('J’entends plus de morceaux de voix que de syllabes attendues (hésitation, répétition ou bruit ?). Vérifie le découpage sur la portée.');
+
+    const values = [];
+    for (let t = seg.F; t <= seg.L; t++) if (seg.keep[t] && trk.voiced[t]) values.push(trk.st[t]);
+    const range = chooseRange(values, opts);
+    const toLevel = st => 1 + 4 * (st - range.lo) / (range.hi - range.lo);
+
+    const contours = seg.segments.map(s => A.contour(trk, s, seg.keep));
+    const fullDurs = contours.filter((c, i) => c.ok && units[i].code !== '0').map(c => c.durMs);
+    const refDur = fullDurs.length ? A.median(fullDurs) : 220;
+    const levels = contours.map(c => (c.ok ? c.st9.map(toLevel) : null));
+
+    const results = units.map((u, i) => {
+      const c = contours[i];
+      const out = { unit: u, seg: seg.segments[i], contour: c, levels: levels[i] };
+      if (!c.ok) {
+        out.eval = {
+          code: u.code, score: null, verdict: 'na', looksLike: null, tip: '',
+          issues: [{ sev: 'info', text: 'Pas assez de voix détectée sur cette syllabe (trop brève, chuchotée ou mal découpée).' }]
+        };
+        return out;
+      }
+      const inGroupPrev = i > 0 && !units[i - 1].breakAfter;
+      const prev = inGroupPrev && levels[i - 1]
+        ? { code: units[i - 1].code, end: (levels[i - 1][7] + levels[i - 1][8]) / 2, min: Math.min(...levels[i - 1]) }
+        : null;
+      const next = !u.breakAfter && i + 1 < units.length ? units[i + 1].code : null;
+      out.eval = evaluateSyllable(levels[i], {
+        code: u.code, alts: u.alts, calibrated: range.calibrated,
+        tSec: (c.t0 - seg.F) * A.FRAME_MS / 1000,
+        creak: c.creak, durMs: c.durMs, refDur,
+        isolated: u.groupStart && u.groupEnd,
+        prev, next
+      });
+      return out;
+    });
+    const scored = results.filter(r => r.eval.score !== null);
+    const toneScore = scored.length ? Math.round(scored.reduce((s, r) => s + r.eval.score, 0) / scored.length) : null;
+    if (scored.length < results.length) warnings.push('Certaines syllabes n’ont pas pu être mesurées.');
+    return { trk, seg, range, results, toneScore, warnings, stToHz, toLevel };
+  }
+
+  function calibrationFrom(res) {
+    const lo = res.range.own.p5, hi = res.range.own.p95;
+    const span = hi - lo;
+    if (!(span >= 5)) return { error: 'Ta voix a peu varié (' + span.toFixed(1) + ' demi-tons). Recommence en exagérant les quatre tons : très haut pour mā, très grave pour mǎ.' };
+    if (span > 24) return { error: 'Mesure incohérente (écart trop grand). Recommence dans un endroit calme.' };
+    return { lo, hi };
+  }
+
+  /* ---------- Reconnaissance vocale ---------- */
+
+  function compareRecognition(units, recognized, converter) {
+    const recChars = [...String(recognized || '')].filter(c => T.HAN.test(c));
+    const target = units.map(u => ({ ch: u.ch ? u.ch.charAt(0) : '', base: T.coreBase(u.base) }));
+    let rec = null;
+    if (converter && recChars.length) {
+      try {
+        const conv = converter(recChars.join(''));
+        if (conv && conv.length === recChars.length) rec = conv.map(r => ({ ch: r.ch, base: T.coreBase(r.base), tone: r.tone }));
+      } catch (e) { rec = null; }
+    }
+    if (!rec) {
+      if (!target.every(t => t.ch)) return null;
+      rec = recChars.map(ch => ({ ch, base: null, tone: null }));
+    }
+    const n = target.length, m = rec.length;
+    const same = (a, b) => (a.ch && a.ch === b.ch) || (b.base !== null && a.base === b.base);
+    const D = Array.from({ length: n + 1 }, (_, i) => new Int32Array(m + 1).fill(0).map((_, j) => (i === 0 ? j : j === 0 ? i : 0)));
+    for (let i = 1; i <= n; i++) {
+      for (let j = 1; j <= m; j++) {
+        D[i][j] = Math.min(D[i - 1][j] + 1, D[i][j - 1] + 1, D[i - 1][j - 1] + (same(target[i - 1], rec[j - 1]) ? 0 : 1));
+      }
+    }
+    const per = new Array(n).fill(null);
+    let i = n, j = m;
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && D[i][j] === D[i - 1][j - 1] + (same(target[i - 1], rec[j - 1]) ? 0 : 1)) {
+        const t = target[i - 1], r = rec[j - 1];
+        if (same(t, r)) per[i - 1] = { status: 'ok', heard: r };
+        else {
+          const detail = {};
+          if (r.base) {
+            const a = T.splitInitial(t.base), b = T.splitInitial(r.base);
+            if (a.initial !== b.initial) detail.initial = [a.initial || '∅', b.initial || '∅'];
+            if (a.final !== b.final) detail.final = [a.final, b.final];
+          }
+          per[i - 1] = { status: 'diff', heard: r, detail };
+        }
+        i--; j--;
+      } else if (i > 0 && D[i][j] === D[i - 1][j] + 1) {
+        per[i - 1] = { status: 'miss' };
+        i--;
+      } else {
+        j--;
+      }
+    }
+    const ok = per.filter(p => p && p.status === 'ok').length;
+    return { per, ok, total: n, text: recChars.join('') };
+  }
+
+  function describeRecognition(unit, p) {
+    if (!p) return '';
+    if (p.status === 'ok') return 'compris';
+    if (p.status === 'miss') return 'non reconnu';
+    const heard = p.heard.base ? T.addToneMark(p.heard.base, p.heard.tone || 0) : p.heard.ch;
+    const bits = [];
+    if (p.detail.initial) bits.push('initiale ' + p.detail.initial[1] + ' au lieu de ' + p.detail.initial[0]);
+    if (p.detail.final) bits.push('finale ' + p.detail.final[1] + ' au lieu de ' + p.detail.final[0]);
+    return 'compris « ' + (p.heard.ch || '') + (heard && heard !== p.heard.ch ? ' ' + heard : '') + ' »' + (bits.length ? ' (' + bits.join(', ') + ')' : '');
+  }
+
+  /* ---------- Tendances ---------- */
+
+  const TREND_KEYS = ['1', '2', '3F', '3H', '4', '0', 'sandhi'];
+  const TREND_LABEL = Object.assign({}, LABEL, { sandhi: 'syllabes modifiées par un sandhi' });
+
+  function trends(history) {
+    const buckets = {};
+    TREND_KEYS.forEach(k => { buckets[k] = []; });
+    for (let h = history.length - 1; h >= 0; h--) {
+      for (const s of history[h].syl) {
+        if (s.s === null || s.s === undefined) continue;
+        if (buckets[s.c] && buckets[s.c].length < 40) buckets[s.c].push(s.s);
+        if (s.sd && buckets.sandhi.length < 40) buckets.sandhi.push(s.s);
+      }
+    }
+    return TREND_KEYS.map(k => ({
+      key: k, label: TREND_LABEL[k], n: buckets[k].length,
+      avg: buckets[k].length ? Math.round(buckets[k].reduce((a, b) => a + b, 0) / buckets[k].length) : null
+    }));
+  }
+
+  /* ---------- Rapport ---------- */
+
+  function buildReport(item, res, extra) {
+    const units = res.results.map(r => r.unit);
+    const dict = units.map(T.dictPinyin).join(' ');
+    const surf = units.map(T.surfPinyin).join(' ');
+    const hz = v => Math.round(stToHz(v));
+    const L = [];
+    L.push('Rapport Portée, entraînement aux tons (' + extra.date + ')');
+    L.push('Phrase : ' + (units.map(u => u.ch).join('') || '(pinyin seul)') + ' | ' + dict + (item.fr ? ' | « ' + item.fr + ' »' : ''));
+    L.push('Prononciation attendue, sandhi compris : ' + surf);
+    L.push('Registre de voix : ' + hz(res.range.lo) + ' à ' + hz(res.range.hi) + ' Hz, d’après ' + res.range.source + (res.range.calibrated ? '' : ' (niveaux approximatifs)'));
+    L.push('Score des tons : ' + (res.toneScore === null ? 'non mesuré' : res.toneScore + '/100'));
+    L.push('');
+    L.push('Mesures par syllabe. Hauteur sur l’échelle de 1 (grave) à 5 (aigu), relevée à 0, 25, 50, 75 et 100 % de la syllabe :');
+    res.results.forEach((r, i) => {
+      const u = r.unit;
+      let line = (i + 1) + '. ' + (u.ch ? u.ch + ' ' : '') + T.surfPinyin(u) + ' ; attendu : ' + LABEL[u.code];
+      if (u.alts) line += ' ou ' + LABEL[u.alts.find(a => a !== u.code)];
+      if (u.sandhi) line += ' (dictionnaire : ' + T.dictPinyin(u) + ')';
+      if (r.levels) line += ' ; mesuré : ' + [0, 2, 4, 6, 8].map(k => r.levels[k].toFixed(1)).join(' / ') + ' ; durée ' + r.contour.durMs + ' ms';
+      line += ' ; score ' + (r.eval.score === null ? 'non mesuré' : r.eval.score);
+      if (r.eval.looksLike) line += ' ; ressemble à un ' + LABEL[r.eval.looksLike];
+      const problems = r.eval.issues.filter(x => x.sev !== 'info').map(x => x.text);
+      if (problems.length) line += ' ; ' + problems.join(' ');
+      if (extra.asr && extra.asr.per[i]) line += ' ; reconnaissance vocale : ' + describeRecognition(u, extra.asr.per[i]);
+      L.push(line);
+    });
+    if (extra.asr) {
+      L.push('');
+      L.push('Reconnaissance vocale du navigateur : « ' + (extra.asr.text || '(rien)') + ' », ' + extra.asr.ok + ' syllabe(s) sur ' + extra.asr.total + ' comprises.');
+    } else if (extra.asrNote) {
+      L.push('');
+      L.push('Reconnaissance vocale : ' + extra.asrNote);
+    }
+    if (res.warnings.length) L.push('Avertissements : ' + res.warnings.join(' '));
+    if (extra.trends) L.push('Moyennes récentes par type de ton : ' + extra.trends);
+    L.push('');
+    L.push('Peux-tu m’expliquer ce qui ne va pas dans mes tons (et dans l’articulation si la reconnaissance vocale signale un problème), puis me proposer un exercice ciblé ?');
+    return L.join('\n');
+  }
+
+  return { LABEL, SHAPES, shapeFor, features, evaluateSyllable, analyze, calibrationFrom, compareRecognition, describeRecognition, trends, buildReport, stToHz };
+})(PorteeText, PorteeAudio);
+
+/* Portée — banque de phrases. Le pinyin est donné sous sa forme de dictionnaire :
+   les changements de ton (sandhi) sont calculés par le programme. */
+const PORTEE_PHRASES = [
+  {
+    id: 'calib',
+    title: 'Calibration',
+    intro: 'À faire en premier : dis les quatre syllabes avec une petite pause entre chacune, en exagérant les tons. Cela mesure le haut et le bas de ta voix.',
+    items: [
+      { h: '妈，麻，马，骂', p: 'mā, má, mǎ, mà', fr: 'maman, chanvre, cheval, gronder', calib: true }
+    ]
+  },
+  {
+    id: 'isoles',
+    title: 'Tons isolés',
+    intro: 'Une syllabe à la fois, puis des séries de quatre avec une pause entre chaque syllabe.',
+    items: [
+      { h: '妈', p: 'mā', fr: 'maman' },
+      { h: '麻', p: 'má', fr: 'chanvre' },
+      { h: '马', p: 'mǎ', fr: 'cheval' },
+      { h: '骂', p: 'mà', fr: 'gronder' },
+      { h: '汤，糖，躺，烫', p: 'tāng, táng, tǎng, tàng', fr: 'soupe, sucre, s’allonger, brûlant' },
+      { h: '八，拔，把，爸', p: 'bā, bá, bǎ, bà', fr: 'huit, arracher, saisir, papa' },
+      { h: '衣，姨，椅，意', p: 'yī, yí, yǐ, yì', fr: 'vêtement, tante, chaise, sens' }
+    ]
+  },
+  {
+    id: 'paires',
+    title: 'Paires de tons',
+    intro: 'Les vingt combinaisons de deux syllabes, dans l’ordre 1-1, 1-2… jusqu’à 4-neutre.',
+    items: [
+      { h: '飞机', p: 'fēijī', fr: 'avion' },
+      { h: '中国', p: 'Zhōngguó', fr: 'Chine' },
+      { h: '铅笔', p: 'qiānbǐ', fr: 'crayon' },
+      { h: '音乐', p: 'yīnyuè', fr: 'musique' },
+      { h: '妈妈', p: 'māma', fr: 'maman' },
+      { h: '明天', p: 'míngtiān', fr: 'demain' },
+      { h: '学习', p: 'xuéxí', fr: 'étudier' },
+      { h: '苹果', p: 'píngguǒ', fr: 'pomme' },
+      { h: '学校', p: 'xuéxiào', fr: 'école' },
+      { h: '朋友', p: 'péngyou', fr: 'ami' },
+      { h: '老师', p: 'lǎoshī', fr: 'professeur' },
+      { h: '美国', p: 'Měiguó', fr: 'États-Unis' },
+      { h: '你好', p: 'nǐ hǎo', fr: 'bonjour' },
+      { h: '考试', p: 'kǎoshì', fr: 'examen' },
+      { h: '我们', p: 'wǒmen', fr: 'nous' },
+      { h: '汽车', p: 'qìchē', fr: 'voiture' },
+      { h: '大学', p: 'dàxué', fr: 'université' },
+      { h: '电脑', p: 'diànnǎo', fr: 'ordinateur' },
+      { h: '再见', p: 'zàijiàn', fr: 'au revoir' },
+      { h: '谢谢', p: 'xièxie', fr: 'merci' }
+    ]
+  },
+  {
+    id: 'debutant',
+    title: 'Phrases, débutant',
+    items: [
+      { h: '你好！', p: 'nǐ hǎo', fr: 'Bonjour !' },
+      { h: '谢谢你。', p: 'xièxie nǐ', fr: 'Merci à toi.' },
+      { h: '我是学生。', p: 'wǒ shì xuésheng', fr: 'Je suis élève.' },
+      { h: '我是法国人。', p: 'wǒ shì Fǎguórén', fr: 'Je suis français(e).' },
+      { h: '你叫什么名字？', p: 'nǐ jiào shénme míngzi', fr: 'Comment tu t’appelles ?' },
+      { h: '很高兴认识你。', p: 'hěn gāoxìng rènshi nǐ', fr: 'Ravi(e) de faire ta connaissance.' },
+      { h: '我喜欢喝茶。', p: 'wǒ xǐhuan hē chá', fr: 'J’aime boire du thé.' },
+      { h: '今天很冷。', p: 'jīntiān hěn lěng', fr: 'Il fait froid aujourd’hui.' },
+      { h: '我不是老师。', p: 'wǒ bù shì lǎoshī', fr: 'Je ne suis pas professeur.' },
+      { h: '我有一个哥哥。', p: 'wǒ yǒu yī ge gēge', fr: 'J’ai un grand frère.' },
+      { h: '这是我的书。', p: 'zhè shì wǒ de shū', fr: 'C’est mon livre.' },
+      { h: '我们一起去吧！', p: 'wǒmen yīqǐ qù ba', fr: 'Allons-y ensemble !' }
+    ]
+  },
+  {
+    id: 'intermediaire',
+    title: 'Phrases, intermédiaire',
+    items: [
+      { h: '我想去中国学习汉语。', p: 'wǒ xiǎng qù Zhōngguó xuéxí Hànyǔ', fr: 'Je voudrais aller étudier le chinois en Chine.' },
+      { h: '你周末一般做什么？', p: 'nǐ zhōumò yībān zuò shénme', fr: 'Que fais-tu en général le week-end ?' },
+      { h: '这个问题有点难。', p: 'zhège wèntí yǒudiǎn nán', fr: 'Cette question est un peu difficile.' },
+      { h: '请再说一遍。', p: 'qǐng zài shuō yī biàn', fr: 'Répète, s’il te plaît.' },
+      { h: '我每天早上七点起床。', p: 'wǒ měitiān zǎoshang qī diǎn qǐchuáng', fr: 'Je me lève à sept heures tous les matins.' },
+      { h: '他们都不太喜欢下雨。', p: 'tāmen dōu bù tài xǐhuan xià yǔ', fr: 'Ils n’aiment pas trop quand il pleut.' },
+      { h: '我对科学很感兴趣。', p: 'wǒ duì kēxué hěn gǎn xìngqù', fr: 'Les sciences m’intéressent beaucoup.' }
+    ]
+  },
+  {
+    id: 'avance',
+    title: 'Phrases, avancé (pièges de sandhi)',
+    items: [
+      { h: '我也想去一次。', p: 'wǒ yě xiǎng qù yī cì', fr: 'Moi aussi, j’aimerais y aller une fois.' },
+      { h: '虽然很累，但是我很开心。', p: 'suīrán hěn lèi, dànshì wǒ hěn kāixīn', fr: 'Même si je suis fatigué(e), je suis content(e).' },
+      { h: '学习语言最重要的是坚持。', p: 'xuéxí yǔyán zuì zhòngyào de shì jiānchí', fr: 'Pour apprendre une langue, le plus important est la persévérance.' },
+      { h: '你可以给我看看吗？', p: 'nǐ kěyǐ gěi wǒ kànkan ma', fr: 'Tu peux me montrer ?' },
+      { h: '我不知道他是不是中国人。', p: 'wǒ bù zhīdao tā shì bù shì Zhōngguórén', fr: 'Je ne sais pas s’il est chinois.' },
+      { h: '一年有十二个月。', p: "yī nián yǒu shí'èr ge yuè", fr: 'Une année compte douze mois.' },
+      { h: '不要客气！', p: 'bù yào kèqi', fr: 'Je t’en prie, ne fais pas de manières !' }
+    ]
+  }
+];
+
+(function () {
+'use strict';
+/* Portée — interface, partie 1 (état, bibliothèque, phrase, portée). */
+const T = PorteeText, A = PorteeAudio, E = PorteeEval;
+const $ = sel => document.querySelector(sel);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt1 = v => v.toFixed(1).replace('.', ',');
+const hzOf = st => Math.round(E.stToHz(st));
+
+const store = {
+  get(key, fallback) {
+    try {
+      const v = localStorage.getItem('portee.' + key);
+      return v === null ? fallback : JSON.parse(v);
+    } catch (e) { return fallback; }
+  },
+  set(key, value) {
+    try { localStorage.setItem('portee.' + key, JSON.stringify(value)); } catch (e) { /* stockage indisponible */ }
+  },
+  clear() {
+    try {
+      Object.keys(localStorage).filter(k => k.startsWith('portee.')).forEach(k => localStorage.removeItem(k));
+    } catch (e) { /* rien */ }
+  }
+};
+
+const state = {
+  item: null,
+  catId: null,
+  target: null,
+  samples: null,
+  sr: 0,
+  fromFile: false,
+  result: null,
+  selected: -1,
+  asr: null,
+  asrCmp: null,
+  recording: null,
+  playCtx: null,
+  playing: null,
+  buffer: null
+};
+
+/* ---------- Pinyin automatique (bibliothèque pinyin-pro chargée en ligne) ---------- */
+
+function hasConverter() {
+  return !!(window.pinyinPro && typeof window.pinyinPro.pinyin === 'function');
+}
+function converter(text) {
+  const all = window.pinyinPro.pinyin(text, { type: 'all', toneSandhi: false });
+  return all.filter(r => r.isZh).map(r => {
+    const s = T.stripMarks(r.pinyin);
+    return { ch: r.origin, base: s.base, tone: r.num === 5 ? 0 : r.num };
+  });
+}
+function watchPinyinLibrary() {
+  const el = document.getElementById('pp-lib');
+  let fallbackStarted = false;
+  const ready = () => refreshCustomHint();
+  const fallback = () => {
+    if (hasConverter() || fallbackStarted) return ready();
+    fallbackStarted = true;
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/pinyin-pro@3.18.2/dist/index.js';
+    s.onload = ready;
+    s.onerror = ready;
+    document.head.appendChild(s);
+  };
+  if (hasConverter()) return ready();
+  if (el) {
+    el.addEventListener('load', () => (hasConverter() ? ready() : fallback()));
+    el.addEventListener('error', fallback);
+  }
+  setTimeout(() => { if (!hasConverter()) fallback(); }, 6000);
+}
+
+/* ---------- Thème ---------- */
+
+const THEMES = ['auto', 'light', 'dark'];
+const THEME_LABEL = { auto: 'Thème : auto', light: 'Thème : clair', dark: 'Thème : sombre' };
+function applyTheme(mode) {
+  if (mode === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', mode);
+  $('#btn-theme').textContent = THEME_LABEL[mode];
+}
+function cycleTheme() {
+  const cur = store.get('theme', 'auto');
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  store.set('theme', next);
+  applyTheme(next);
+}
+
+/* ---------- Calibration ---------- */
+
+function currentCalibration() {
+  const c = store.get('calib', null);
+  return c && isFinite(c.lo) && isFinite(c.hi) ? c : null;
+}
+function rangeOptions() {
+  const calib = currentCalibration();
+  if (calib) return { calib };
+  const vs = store.get('voice', []);
+  if (vs.length >= 4) {
+    return { auto: { lo: A.median(vs.map(v => v.p5)) - 0.5, hi: A.median(vs.map(v => v.p95)) + 0.5 } };
+  }
+  return {};
+}
+function renderCalibBadge() {
+  const c = currentCalibration();
+  const el = $('#calib-badge');
+  if (c) {
+    el.innerHTML = 'Voix calibrée : ' + hzOf(c.lo) + ' à ' + hzOf(c.hi) + ' Hz. <button type="button" class="link" data-act="calibrate">Refaire</button>';
+    el.classList.remove('warn');
+  } else {
+    el.innerHTML = 'Voix non calibrée : les jugements « trop haut » ou « trop bas » sont approximatifs. <button type="button" class="link" data-act="calibrate">Calibrer (20 s)</button>';
+    el.classList.add('warn');
+  }
+}
+
+/* ---------- Bibliothèque ---------- */
+
+function practiceList() { return store.get('practice', []); }
+
+function libraryGroups() {
+  const groups = [];
+  const practice = practiceList();
+  if (practice.length) {
+    groups.push({ id: 'practice', title: 'À retravailler', intro: 'Les phrases que tu as mises de côté, avec ton dernier score.', items: practice });
+  }
+  return groups.concat(PORTEE_PHRASES);
+}
+
+function renderLibrary() {
+  const nav = $('#lib');
+  const openIds = new Set([...nav.querySelectorAll('details[open]')].map(d => d.dataset.cat));
+  const firstRender = !nav.children.length;
+  let html = '';
+  for (const g of libraryGroups()) {
+    const isCurrent = state.catId === g.id;
+    const open = isCurrent || openIds.has(g.id) || (firstRender && g.id === 'calib' && !currentCalibration());
+    html += '<details data-cat="' + g.id + '"' + (open ? ' open' : '') + '><summary><span>' + esc(g.title) + '</span><span class="count">' + g.items.length + '</span></summary>';
+    if (g.intro) html += '<p class="lib-intro">' + esc(g.intro) + '</p>';
+    html += '<ul>';
+    g.items.forEach((it, i) => {
+      const cur = state.catId === g.id && state.item && state.item.h === it.h && state.item.p === it.p;
+      html += '<li><button type="button" class="lib-item" data-cat="' + g.id + '" data-idx="' + i + '"' + (cur ? ' aria-current="true"' : '') + '>'
+        + '<span class="li-hz" lang="zh-CN">' + esc(it.h || it.p) + '</span>'
+        + '<span class="li-py">' + esc(it.p) + '</span>'
+        + (g.id === 'practice' && it.last !== null && it.last !== undefined ? '<span class="li-last">dernier score ' + it.last + '</span>' : '')
+        + '</button>'
+        + (g.id === 'practice' ? '<button type="button" class="li-remove" data-remove="' + i + '" aria-label="Retirer ' + esc(it.h || it.p) + ' de la liste">Retirer</button>' : '')
+        + '</li>';
+    });
+    html += '</ul></details>';
+  }
+  nav.innerHTML = html;
+}
+
+function findItem(catId, idx) {
+  const g = libraryGroups().find(x => x.id === catId);
+  return g ? g.items[idx] : null;
+}
+
+/* ---------- Choix de la phrase ---------- */
+
+function selectItem(item, catId) {
+  const target = T.buildTarget({ hanzi: item.h, pinyin: item.p }, hasConverter() ? converter : null);
+  if (target.error) return target.error;
+  stopRecording(true);
+  state.item = item;
+  state.catId = catId;
+  state.target = target;
+  state.result = null;
+  state.samples = null;
+  state.buffer = null;
+  state.selected = -1;
+  state.asr = null;
+  state.asrCmp = null;
+  store.set('last', { item, catId });
+  $('#btn-play').disabled = true;
+  setStatus('');
+  renderTarget();
+  renderStaff();
+  renderResults();
+  renderReport();
+  renderLibrary();
+  return null;
+}
+
+function toneClass(code) { return 't' + (code === '3F' || code === '3H' ? '3' : code); }
+
+function renderTarget() {
+  const units = state.target.units;
+  const cat = libraryGroups().find(g => g.id === state.catId);
+  $('#target-cat').textContent = cat ? cat.title : 'Ta phrase';
+  let html = '';
+  units.forEach((u, i) => {
+    const dict = T.dictPinyin(u), surf = T.surfPinyin(u);
+    html += '<span class="syl ' + toneClass(u.code) + (u.sandhi ? ' changed' : '') + '">'
+      + '<span class="py">' + esc(surf) + '</span>'
+      + '<span class="hz">' + esc(u.ch || '·') + '</span>'
+      + '<span class="py-dict">' + (u.sandhi ? esc(dict) : '&nbsp;') + '</span>'
+      + '</span>';
+    if (u.breakAfter) html += '<span class="pause" aria-hidden="true"></span>';
+  });
+  $('#phrase').innerHTML = html;
+  $('#phrase').setAttribute('aria-label', units.map(u => (u.ch || '') + ' ' + T.surfPinyin(u)).join(', '));
+  $('#phrase-fr').textContent = state.item.fr ? '« ' + state.item.fr + ' »' : '';
+
+  const notes = [];
+  if (state.item.calib) notes.push('<p class="note-calib">Dis les quatre syllabes avec une courte pause entre chacune, en exagérant : très haut et plat pour mā, montant pour má, très grave pour mǎ, tombant du haut pour mà.</p>');
+  const changed = units.filter(u => u.sandhi);
+  if (changed.length) {
+    notes.push('<p class="legend-sandhi">Au-dessus des caractères : ce qu’on prononce réellement. En dessous, en gris : la forme du dictionnaire, quand un changement de ton (sandhi) la modifie.</p>');
+    notes.push('<ul class="sandhi-list">' + changed.map(u => '<li><span lang="zh-CN">' + esc(u.ch) + '</span> ' + esc(T.dictPinyin(u)) + ' devient ' + esc(T.surfPinyin(u)) + ' : ' + esc(u.notes[0] || '') + '</li>').join('') + '</ul>');
+  }
+  const halves = units.filter(u => u.code === '3H' || (u.alts && u.alts.includes('3H')));
+  if (halves.length) {
+    notes.push('<p class="half-note">Demi-3e ton (grave, sans remontée) sur ' + halves.map(u => '<span lang="zh-CN">' + esc(u.ch || T.surfPinyin(u)) + '</span>').join(', ') + '. Le 3e ton complet, qui remonte, ne s’entend qu’en fin de groupe.</p>');
+  }
+  if (state.target.warnings.length) notes.push('<p class="warn">' + state.target.warnings.map(esc).join(' ') + '</p>');
+  $('#phrase-notes').innerHTML = notes.join('');
+}
+
+/* ---------- La portée ---------- */
+
+const VB_H = 360;
+const PX0 = 60, PY_TOP = 96, PY_BOT = 300;
+let VB_W = 1000, PX1 = 984;
+// La portée est dessinée à la largeur réelle disponible ; défilement horizontal seulement si la phrase est longue.
+function staffWidth() {
+  const box = document.querySelector('.staff-scroll');
+  const avail = box ? Math.floor(box.clientWidth) : 1000;
+  const n = state.target ? state.target.units.length : 1;
+  return Math.max(300, avail, PX0 + 20 + n * 46);
+}
+const yOf = lv => PY_BOT - (Math.max(0.25, Math.min(5.75, lv)) - 0.5) / 5 * (PY_BOT - PY_TOP);
+const VERDICT = {
+  ok: { sym: '✓', text: 'juste' },
+  moyen: { sym: '~', text: 'à revoir' },
+  faux: { sym: '✗', text: 'faux' },
+  na: { sym: '?', text: 'non mesuré' }
+};
+
+function layoutSlots() {
+  const units = state.target.units;
+  const res = state.result;
+  if (res) {
+    const pad = 14;
+    const t0 = Math.max(0, res.seg.F - pad), t1 = Math.min(res.trk.n - 1, res.seg.L + pad);
+    const xOf = t => PX0 + (t - t0) / Math.max(1, t1 - t0) * (PX1 - PX0);
+    return {
+      xOf,
+      slots: res.results.map((r, i) => {
+        const x0 = i === 0 ? PX0 : xOf(r.seg.a);
+        const x1 = i === units.length - 1 ? PX1 : xOf(r.seg.b);
+        const c = r.contour;
+        return {
+          i, unit: r.unit, ev: r.eval, x0, x1,
+          tx0: c.ok ? xOf(c.t0) : x0 + 8,
+          tx1: c.ok ? xOf(c.t1) : x1 - 8
+        };
+      })
+    };
+  }
+  const w = units.map(u => (u.code === '0' ? 0.6 : 1));
+  const gap = 0.35;
+  const total = w.reduce((a, b) => a + b, 0) + gap * units.filter((u, i) => u.breakAfter && i < units.length - 1).length;
+  const unitPx = (PX1 - PX0) / total;
+  let x = PX0;
+  return {
+    xOf: null,
+    slots: units.map((u, i) => {
+      const x0 = x, x1 = x + w[i] * unitPx;
+      x = x1 + (u.breakAfter ? gap * unitPx : 0);
+      const inset = (x1 - x0) * 0.16;
+      return { i, unit: u, ev: null, x0, x1, tx0: x0 + inset, tx1: x1 - inset };
+    })
+  };
+}
+
+function prevCodeOf(i) {
+  const units = state.target.units;
+  return i > 0 && !units[i - 1].breakAfter ? units[i - 1].code : null;
+}
+
+function renderStaff() {
+  const svg = $('#staff');
+  if (!state.target) { svg.innerHTML = ''; return; }
+  VB_W = staffWidth();
+  PX1 = VB_W - 16;
+  svg.setAttribute('viewBox', '0 0 ' + VB_W + ' ' + VB_H);
+  svg.setAttribute('width', VB_W);
+  svg.setAttribute('height', VB_H);
+  const { xOf, slots } = layoutSlots();
+  const res = state.result;
+  const parts = [];
+  const narrow = (PX1 - PX0) / Math.max(1, slots.length) < 60;
+  const stackScores = slots.some(s => s.x1 - s.x0 < 70);
+
+  slots.forEach(s => {
+    if (s.i === state.selected) parts.push('<rect class="sel" x="' + s.x0.toFixed(1) + '" y="4" width="' + (s.x1 - s.x0).toFixed(1) + '" height="' + (VB_H - 8) + '" rx="8"/>');
+  });
+  for (let lv = 1; lv <= 5; lv++) {
+    const y = yOf(lv).toFixed(1);
+    parts.push('<line class="lvl" x1="' + (PX0 - 6) + '" x2="' + PX1 + '" y1="' + y + '" y2="' + y + '"/>');
+    parts.push('<text class="lvl-n" x="' + (PX0 - 18) + '" y="' + (yOf(lv) + 5).toFixed(1) + '">' + lv + '</text>');
+  }
+  parts.push('<text class="lvl-w" x="' + (PX0 - 18) + '" y="' + (yOf(5) - 16).toFixed(1) + '">aigu</text>');
+  parts.push('<text class="lvl-w" x="' + (PX0 - 18) + '" y="' + (yOf(1) + 26).toFixed(1) + '">grave</text>');
+
+  slots.forEach(s => {
+    if (s.i > 0) {
+      const breakBefore = state.target.units[s.i - 1].breakAfter;
+      parts.push('<line class="' + (breakBefore ? 'sep strong' : 'sep') + '" x1="' + s.x0.toFixed(1) + '" x2="' + s.x0.toFixed(1) + '" y1="' + (PY_TOP - 8) + '" y2="' + (PY_BOT + 8) + '"/>');
+    }
+    const u = s.unit;
+    const shape = E.shapeFor(u.code, prevCodeOf(s.i));
+    const pts = shape.map((lv, k) => (s.tx0 + (s.tx1 - s.tx0) * k / 8).toFixed(1) + ',' + yOf(lv).toFixed(1)).join(' ');
+    parts.push('<polyline class="tgt ' + toneClass(u.code) + '" points="' + pts + '"/>');
+    const cx = ((s.x0 + s.x1) / 2).toFixed(1);
+    parts.push('<text class="st-hz ' + toneClass(u.code) + (narrow ? ' small' : '') + '" x="' + cx + '" y="40" lang="zh-CN">' + esc(u.ch || '') + '</text>');
+    parts.push('<text class="st-py ' + toneClass(u.code) + (narrow ? ' small' : '') + '" x="' + cx + '" y="' + (u.ch ? 68 : 52) + '">' + esc(T.surfPinyin(u)) + '</text>');
+    if (s.ev) {
+      const v = VERDICT[s.ev.verdict];
+      const num = s.ev.score === null ? '' : String(s.ev.score);
+      if (stackScores) {
+        parts.push('<text class="st-score v-' + s.ev.verdict + '" x="' + cx + '" y="330">' + v.sym + '</text>');
+        if (num) parts.push('<text class="st-score small v-' + s.ev.verdict + '" x="' + cx + '" y="350">' + num + '</text>');
+      } else {
+        parts.push('<text class="st-score v-' + s.ev.verdict + '" x="' + cx + '" y="340">' + v.sym + (num ? ' ' + num : '') + '</text>');
+      }
+    }
+  });
+
+  if (res) {
+    let d = '';
+    for (const run of res.seg.runs) {
+      let pen = false;
+      for (let t = run.s; t <= run.e; t++) {
+        if (!res.trk.voiced[t]) { pen = false; continue; }
+        const x = xOf(t).toFixed(1), y = yOf(res.toLevel(res.trk.st[t])).toFixed(1);
+        d += (pen ? 'L' : 'M') + x + ' ' + y + ' ';
+        pen = true;
+      }
+    }
+    parts.push('<path class="voice' + (state.animateVoice ? ' draw' : '') + '" pathLength="1" d="' + d.trim() + '"/>');
+  }
+  state.animateVoice = false;
+  $('#staff-hint').hidden = !!res;
+
+  slots.forEach(s => {
+    const u = s.unit;
+    const label = 'Syllabe ' + (s.i + 1) + ' : ' + (u.ch ? u.ch + ' ' : '') + T.surfPinyin(u) + ', ' + E.LABEL[u.code]
+      + (s.ev ? ', ' + VERDICT[s.ev.verdict].text + (s.ev.score === null ? '' : ', score ' + s.ev.score) : '');
+    parts.push('<rect class="hit" x="' + s.x0.toFixed(1) + '" y="0" width="' + (s.x1 - s.x0).toFixed(1) + '" height="' + VB_H + '" data-i="' + s.i + '" tabindex="' + (res ? 0 : -1) + '" role="button" aria-label="' + esc(label) + '"/>');
+  });
+  svg.innerHTML = parts.join('');
+  svg.classList.toggle('has-result', !!res);
+}
+
+/* Portée — interface, partie 2 (résultats, micro, lecture, rapport, événements). */
+
+function setStatus(text, kind) {
+  const el = $('#status');
+  el.textContent = text || '';
+  el.className = 'status' + (kind ? ' ' + kind : '');
+}
+
+/* ---------- Résultats ---------- */
+
+function renderResults() {
+  const box = $('#results');
+  const res = state.result;
+  if (!res) { box.hidden = true; return; }
+  box.hidden = false;
+  const counts = { ok: 0, moyen: 0, faux: 0, na: 0 };
+  res.results.forEach(r => { counts[r.eval.verdict]++; });
+  const bits = [];
+  if (counts.ok) bits.push(counts.ok + (counts.ok > 1 ? ' justes' : ' juste'));
+  if (counts.moyen) bits.push(counts.moyen + ' à revoir');
+  if (counts.faux) bits.push(counts.faux + (counts.faux > 1 ? ' fausses' : ' fausse'));
+  if (counts.na) bits.push(counts.na + ' non mesurée' + (counts.na > 1 ? 's' : ''));
+  const r = res.range;
+  let html = '<div class="score-line"><p class="big-score"><span class="num">' + (res.toneScore === null ? '—' : res.toneScore) + '</span><span class="of">sur 100</span></p>'
+    + '<div class="score-text"><p>' + esc(bits.join(', ')) + '.</p>'
+    + '<p class="muted">Registre utilisé : ' + hzOf(r.lo) + ' à ' + hzOf(r.hi) + ' Hz, d’après ' + esc(r.source) + '.'
+    + (r.calibrated ? '' : ' Sans calibration, « haut » et « bas » sont approximatifs ; les formes (monte, descend, plat) restent fiables.') + '</p></div></div>';
+  if (res.warnings.length) html += '<ul class="warnings">' + res.warnings.map(w => '<li>' + esc(w) + '</li>').join('') + '</ul>';
+  html += '<p class="muted small">Clique sur une syllabe de la portée pour voir son détail. Si le découpage (traits verticaux) tombe au mauvais endroit, les scores concernés ne sont pas fiables : recommence en articulant un peu plus.</p>';
+  $('#summary').innerHTML = html;
+  renderDetail();
+  renderASR();
+}
+
+function renderDetail() {
+  const box = $('#detail');
+  const res = state.result;
+  if (!res || state.selected < 0) { box.innerHTML = ''; return; }
+  const r = res.results[state.selected];
+  const u = r.unit, ev = r.eval;
+  const tc = toneClass(u.code);
+  const v = VERDICT[ev.verdict];
+  let expected = E.LABEL[u.code];
+  if (u.alts) expected = u.alts.map(a => E.LABEL[a]).join(' ou ');
+  let html = '<div class="detail-head">'
+    + '<span class="d-hz ' + tc + '" lang="zh-CN">' + esc(u.ch || '·') + '</span>'
+    + '<div class="d-id"><p class="d-py ' + tc + '">' + esc(T.surfPinyin(u)) + '</p>'
+    + '<p>Attendu : ' + esc(expected) + (u.sandhi ? ' <span class="muted">(au dictionnaire : ' + esc(T.dictPinyin(u)) + ')</span>' : '') + '</p></div>'
+    + '<p class="d-score v-' + ev.verdict + '"><span class="sym" aria-hidden="true">' + v.sym + '</span> ' + (ev.score === null ? '' : ev.score) + ' <span class="sr-only">' + v.text + '</span></p>'
+    + '</div>';
+  if (ev.looksLike) html += '<p class="d-looks">On entend plutôt un ' + esc(E.LABEL[ev.looksLike]) + '.</p>';
+  const real = ev.issues.filter(x => x.sev !== 'info');
+  const info = ev.issues.filter(x => x.sev === 'info');
+  if (real.length) html += '<ul class="d-issues">' + real.map(x => '<li class="' + x.sev + '">' + esc(x.text) + '</li>').join('') + '</ul>';
+  else if (ev.score !== null) html += '<p class="d-fine">La forme et la hauteur correspondent au ton attendu.</p>';
+  info.forEach(x => { html += '<p class="d-info">' + esc(x.text) + '</p>'; });
+  if (u.notes.length) html += '<p class="d-note">' + esc(u.notes.join(' ')) + '</p>';
+  if (ev.tip) html += '<p class="d-tip"><strong>Comment faire.</strong> ' + esc(ev.tip) + '</p>';
+  if (r.levels) {
+    html += '<p class="d-measure muted">Mesure (1 grave, 5 aigu) au début, au quart, au milieu, aux trois quarts et à la fin : '
+      + [0, 2, 4, 6, 8].map(k => fmt1(r.levels[k])).join(' ; ') + '. Partie voisée : ' + r.contour.durMs + ' ms.</p>';
+  }
+  if (state.asrCmp && state.asrCmp.per[state.selected]) {
+    html += '<p class="d-asr">Reconnaissance vocale : ' + esc(E.describeRecognition(u, state.asrCmp.per[state.selected])) + '.</p>';
+  }
+  html += '<div class="d-actions">'
+    + '<button type="button" data-act="play-syl">Écouter cette syllabe</button>'
+    + '<button type="button" class="ghost" data-act="prev-syl"' + (state.selected === 0 ? ' disabled' : '') + '>Syllabe précédente</button>'
+    + '<button type="button" class="ghost" data-act="next-syl"' + (state.selected === res.results.length - 1 ? ' disabled' : '') + '>Syllabe suivante</button>'
+    + '</div>';
+  box.innerHTML = html;
+}
+
+function selectSyllable(i, focus) {
+  if (!state.result) return;
+  state.selected = Math.max(0, Math.min(state.result.results.length - 1, i));
+  renderStaff();
+  renderDetail();
+  if (focus) {
+    const hit = document.querySelector('#staff .hit[data-i="' + state.selected + '"]');
+    if (hit) hit.focus();
+  }
+}
+
+/* ---------- Reconnaissance vocale (Chrome, Edge) ---------- */
+
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+function startASR() {
+  state.asrCmp = null;
+  if (!SpeechRec) { state.asr = { status: 'unsupported' }; return; }
+  if (!$('#opt-asr').checked) { state.asr = { status: 'off' }; return; }
+  const rec = new SpeechRec();
+  rec.lang = 'zh-CN';
+  rec.continuous = true;
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+  const st = { status: 'listening', parts: [], rec, text: '', error: null };
+  rec.onresult = e => {
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) st.parts.push(e.results[i][0].transcript);
+    }
+  };
+  rec.onerror = e => { st.error = e.error || 'erreur'; };
+  rec.onend = () => finishASR(st);
+  try { rec.start(); } catch (e) { st.status = 'error'; st.error = 'start'; }
+  state.asr = st;
+}
+function stopASR() {
+  const st = state.asr;
+  if (!st || st.status !== 'listening') return;
+  try { st.rec.stop(); } catch (e) { /* déjà arrêté */ }
+  st.watchdog = setTimeout(() => {
+    if (st.status === 'listening') { st.error = st.error || 'timeout'; finishASR(st); }
+  }, 8000);
+}
+function finishASR(st) {
+  if (st.status !== 'listening') return;
+  clearTimeout(st.watchdog);
+  st.text = st.parts.join('');
+  const hasHan = [...st.text].some(c => T.HAN.test(c));
+  if (!hasHan && !st.error) st.error = 'empty';
+  st.status = hasHan ? 'done' : 'error';
+  if (state.asr !== st) return;
+  compareASR();
+  renderASR();
+  renderDetail();
+  renderReport();
+}
+function compareASR() {
+  const st = state.asr;
+  state.asrCmp = null;
+  if (!st || st.status !== 'done' || !state.result) return;
+  state.asrCmp = E.compareRecognition(state.target.units, st.text, hasConverter() ? converter : null);
+}
+const ASR_ERRORS = {
+  'network': 'le service n’a pas répondu. Il passe par les serveurs de Google : il faut une connexion, et il ne fonctionne pas dans toutes les versions de Chromium (Google Chrome ou Edge conviennent).',
+  'not-allowed': 'refusée par le navigateur.',
+  'service-not-allowed': 'refusée par le navigateur.',
+  'no-speech': 'rien n’a été reconnu.',
+  'audio-capture': 'le micro n’était pas disponible pour elle.',
+  'language-not-supported': 'le chinois n’est pas pris en charge ici.',
+  'timeout': 'pas de réponse dans les temps.',
+  'start': 'impossible de la démarrer.',
+  'empty': 'elle n’a rien renvoyé. Soit le service n’est pas disponible dans ce navigateur (fréquent avec Chromium), soit elle n’a pas compris la phrase. Si ça se répète dans Google Chrome, articule plus nettement.'
+};
+function asrNote() {
+  const st = state.asr;
+  if (!st) return '';
+  if (st.status === 'unsupported') return 'indisponible dans ce navigateur (il faut Google Chrome ou Microsoft Edge).';
+  if (st.status === 'off') return 'désactivée.';
+  if (st.status === 'file') return 'pas de reconnaissance vocale sur un fichier importé.';
+  if (st.status === 'listening') return 'en attente du résultat.';
+  if (st.status === 'error') return ASR_ERRORS[st.error] || ('erreur (' + st.error + ').');
+  if (st.status === 'done' && !state.asrCmp) return 'la comparaison syllabe par syllabe n’est pas possible pour cette phrase.';
+  return '';
+}
+function renderASR() {
+  const box = $('#asr');
+  if (!state.result || !state.asr) { box.innerHTML = ''; return; }
+  const st = state.asr;
+  let html = '<h3>Test d’intelligibilité</h3>';
+  if (state.asrCmp) {
+    const c = state.asrCmp;
+    html += '<p>La reconnaissance vocale a compris <span class="asr-text" lang="zh-CN">« ' + esc(st.text || '…') + ' »</span> : ' + c.ok + ' syllabe' + (c.ok > 1 ? 's' : '') + ' sur ' + c.total + ' retrouvée' + (c.ok > 1 ? 's' : '') + '.</p>';
+    html += '<ol class="asr-row">' + state.target.units.map((u, i) => {
+      const p = c.per[i];
+      const cls = p ? p.status : 'miss';
+      const heard = p && p.status === 'diff' ? '<span class="heard">' + esc(p.heard.base ? T.addToneMark(p.heard.base, p.heard.tone || 0) : p.heard.ch) + '</span>' : '';
+      return '<li class="' + cls + '"><span lang="zh-CN">' + esc(u.ch || T.surfPinyin(u)) + '</span>' + heard + '<span class="sr-only">' + esc(E.describeRecognition(u, p)) + '</span></li>';
+    }).join('') + '</ol>';
+    html += '<p class="muted small">Ce test ne note pas les tons : il indique si un système de reconnaissance comprend ta phrase. Il s’aide du contexte et peut donc « deviner » un mot mal prononcé ; en revanche, une syllabe comprise de travers signale souvent une consonne ou une voyelle à revoir.</p>';
+  } else {
+    html += '<p class="muted">Reconnaissance vocale : ' + esc(asrNote()) + '</p>';
+  }
+  box.innerHTML = html;
+}
+
+/* ---------- Tendances et historique ---------- */
+
+function saveHistory(res) {
+  const hist = store.get('history', []);
+  hist.push({
+    d: Date.now(), h: state.item.h, p: state.item.p, s: res.toneScore,
+    syl: res.results.map(r => ({ c: r.unit.code, s: r.eval.score, sd: !!r.unit.sandhi }))
+  });
+  while (hist.length > 200) hist.shift();
+  store.set('history', hist);
+  const practice = practiceList();
+  const k = practice.findIndex(p => p.h === state.item.h && p.p === state.item.p);
+  if (k >= 0) { practice[k].last = res.toneScore; store.set('practice', practice); }
+}
+function recordVoiceStats(res) {
+  const measured = res.results.filter(r => r.eval.score !== null).length;
+  if (measured < 3) return;
+  const vs = store.get('voice', []);
+  vs.push({ p5: res.range.own.p5, p95: res.range.own.p95 });
+  while (vs.length > 12) vs.shift();
+  store.set('voice', vs);
+}
+function trendSummary() {
+  return E.trends(store.get('history', [])).filter(t => t.n >= 3).map(t => t.label + ' ' + t.avg + ' (' + t.n + ')').join(', ');
+}
+function renderTrends() {
+  const hist = store.get('history', []);
+  const box = $('#trends');
+  const rows = E.trends(hist);
+  const total = rows.filter(r => r.key !== 'sandhi').reduce((s, r) => s + r.n, 0);
+  if (total < 8) {
+    box.innerHTML = '<p class="muted">Après quelques enregistrements, tu verras ici ta moyenne par type de ton, pour savoir quoi travailler en priorité.</p>'
+      + (hist.length ? '<button type="button" class="link" data-act="clear">Effacer mes données</button>' : '');
+    return;
+  }
+  const ranked = rows.filter(r => r.n >= 5 && r.avg !== null).sort((a, b) => a.avg - b.avg);
+  let html = '';
+  if (ranked.length && ranked[0].avg < 75) html += '<p class="focus">À travailler en priorité : <strong>' + esc(ranked[0].label) + '</strong> (moyenne ' + ranked[0].avg + ').</p>';
+  html += '<ul class="trend-list">' + rows.filter(r => r.n).map(r => {
+    const cls = r.key === 'sandhi' ? 'tS' : toneClass(r.key);
+    return '<li class="' + cls + '"><span class="tr-lbl">' + esc(r.label) + '</span><span class="tr-bar" aria-hidden="true"><span style="width:' + r.avg + '%"></span></span><span class="tr-val">' + r.avg + '</span><span class="tr-n">' + r.n + ' syll.</span></li>';
+  }).join('') + '</ul>';
+  html += '<p class="muted small">Moyenne de tes 40 dernières syllabes par catégorie, sur ' + hist.length + ' enregistrement' + (hist.length > 1 ? 's' : '') + '. <button type="button" class="link" data-act="clear">Effacer mes données</button></p>';
+  box.innerHTML = html;
+}
+
+/* ---------- Rapport ---------- */
+
+function renderReport() {
+  const ta = $('#report');
+  const res = state.result;
+  $('#btn-copy').disabled = !res;
+  $('#btn-save').disabled = !state.item;
+  if (!res) {
+    ta.value = '';
+    ta.placeholder = 'Le rapport apparaîtra ici après un enregistrement.';
+    return;
+  }
+  const date = new Date().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
+  ta.value = E.buildReport(state.item, res, { date, asr: state.asrCmp, asrNote: asrNote(), trends: trendSummary() });
+}
+async function copyReport() {
+  const ta = $('#report');
+  let ok = false;
+  try { await navigator.clipboard.writeText(ta.value); ok = true; } catch (e) {
+    ta.focus();
+    ta.select();
+    try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+  }
+  $('#copy-msg').textContent = ok ? 'Copié. Colle-le dans ta conversation avec Claude.' : 'La copie automatique a échoué : sélectionne le texte et copie-le à la main.';
+}
+function saveToPractice() {
+  const practice = practiceList();
+  const k = practice.findIndex(p => p.h === state.item.h && p.p === state.item.p);
+  const entry = { h: state.item.h, p: state.item.p, fr: state.item.fr || '', last: state.result ? state.result.toneScore : null };
+  if (k >= 0) practice[k] = entry; else practice.unshift(entry);
+  while (practice.length > 50) practice.pop();
+  store.set('practice', practice);
+  renderLibrary();
+  $('#copy-msg').textContent = 'Ajouté à « À retravailler ».';
+}
+
+/* ---------- Micro ---------- */
+
+const IS_ANDROID = /Android/i.test(navigator.userAgent);
+const IS_MOBILE = IS_ANDROID || /iPhone|iPad|iPod/i.test(navigator.userAgent) || !!(navigator.userAgentData && navigator.userAgentData.mobile);
+const IS_LOCAL = location.protocol === 'file:' || location.protocol === 'content:';
+const LOCAL_MOBILE_MSG = 'Sur téléphone, le micro est en général refusé aux pages ouvertes depuis un fichier du téléphone. Ouvre la page depuis une adresse https (par exemple une copie mise en ligne sur GitHub Pages)'
+  + (IS_ANDROID ? ', ou utilise le bouton « Enregistrer avec l’appli du téléphone ».' : ', ou enregistre-toi avec une autre appli puis importe le fichier.');
+
+function micStatus() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    if (IS_MOBILE && IS_LOCAL) return { ok: false, why: LOCAL_MOBILE_MSG };
+    return { ok: false, why: window.isSecureContext === false ? 'Le micro demande une page sécurisée : ouvre le fichier directement dans le navigateur.' : 'Ce navigateur ne donne pas accès au micro. Tu peux importer un enregistrement.' };
+  }
+  const policy = document.permissionsPolicy || document.featurePolicy;
+  try {
+    if (policy && typeof policy.allowsFeature === 'function' && !policy.allowsFeature('microphone')) {
+      return { ok: false, why: 'Le micro est bloqué dans cette vue intégrée. Télécharge le fichier et ouvre-le directement dans ton navigateur, ou importe un enregistrement.' };
+    }
+  } catch (e) { /* ignoré */ }
+  return { ok: true };
+}
+function micError(err) {
+  const name = err && err.name;
+  if (IS_MOBILE && IS_LOCAL) return LOCAL_MOBILE_MSG;
+  if ((name === 'NotAllowedError' || name === 'SecurityError') && IS_MOBILE) return 'Accès au micro refusé. Touche l’icône à gauche de l’adresse, puis Autorisations et Micro. Vérifie aussi, dans les réglages du téléphone, que Chrome a le droit d’utiliser le micro.';
+  if (name === 'NotAllowedError' || name === 'SecurityError') return 'Accès au micro refusé. Autorise-le (icône à gauche de la barre d’adresse), puis réessaie.';
+  if (name === 'NotFoundError' || name === 'OverconstrainedError') return 'Aucun micro trouvé. Branche-en un ou vérifie les réglages audio du système.';
+  if (name === 'NotReadableError') return 'Le micro est déjà utilisé par une autre application.';
+  return 'Impossible d’ouvrir le micro' + (name ? ' (' + name + ')' : '') + '.';
+}
+
+const MAX_SECONDS = 12;
+
+async function startRecording() {
+  if (state.starting) return;
+  const mic = micStatus();
+  if (!mic.ok) { setStatus(mic.why, 'error'); return; }
+  stopPlayback();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  // Le contexte audio est créé pendant l'appui : iOS et certains navigateurs mobiles l'exigent.
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  const ctx = new Ctx();
+  ctx.resume().catch(() => {});
+  state.starting = true;
+  setStatus('Ouverture du micro…');
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 }
+    });
+  } catch (err) {
+    state.starting = false;
+    ctx.close().catch(() => {});
+    setStatus(micError(err), 'error');
+    return;
+  }
+  state.starting = false;
+  try { await ctx.resume(); } catch (e) { /* ignoré */ }
+  const src = ctx.createMediaStreamSource(stream);
+  const proc = ctx.createScriptProcessor(4096, 1, 1);
+  const rec = { ctx, stream, src, proc, chunks: [], sr: ctx.sampleRate, noise: Infinity, speechMs: 0, quietMs: 0, elapsed: 0 };
+  proc.onaudioprocess = e => onAudio(rec, e.inputBuffer.getChannelData(0));
+  src.connect(proc);
+  proc.connect(ctx.destination);
+  state.recording = rec;
+  state.result = null;
+  state.selected = -1;
+  renderStaff();
+  renderResults();
+  renderReport();
+  startASR();
+  $('#btn-rec').classList.add('is-rec');
+  $('#btn-rec').setAttribute('aria-pressed', 'true');
+  $('#btn-rec .lbl').textContent = 'Arrêter';
+  $('#rec-live').hidden = false;
+  setStatus('Je t’écoute. Dis la phrase en entier' + ($('#opt-auto').checked ? ' ; l’enregistrement s’arrêtera tout seul après un court silence.' : ', puis clique sur Arrêter.'));
+}
+
+function onAudio(rec, data) {
+  if (state.recording !== rec) return;
+  rec.chunks.push(new Float32Array(data));
+  let s = 0;
+  for (let i = 0; i < data.length; i++) s += data[i] * data[i];
+  const db = 10 * Math.log10(s / data.length + 1e-12);
+  const ms = 1000 * data.length / rec.sr;
+  rec.elapsed += ms;
+  rec.noise = Math.min(rec.noise, db);
+  const loud = db > Math.max(rec.noise + 15, -60);
+  if (loud) { rec.speechMs += ms; rec.quietMs = 0; } else if (rec.speechMs > 0) rec.quietMs += ms;
+  $('#meter-bar').style.width = Math.max(0, Math.min(100, (db + 65) * 2)) + '%';
+  $('#rec-time').textContent = fmt1(rec.elapsed / 1000) + ' s';
+  if (rec.elapsed >= MAX_SECONDS * 1000) { stopRecording(); return; }
+  if ($('#opt-auto').checked && rec.speechMs >= 250 && rec.quietMs >= 1300) stopRecording();
+}
+
+function stopRecording(silent) {
+  const rec = state.recording;
+  if (!rec) return;
+  state.recording = null;
+  try { rec.proc.disconnect(); rec.src.disconnect(); } catch (e) { /* ignoré */ }
+  rec.stream.getTracks().forEach(t => t.stop());
+  rec.ctx.close().catch(() => {});
+  $('#btn-rec').classList.remove('is-rec');
+  $('#btn-rec').setAttribute('aria-pressed', 'false');
+  $('#btn-rec .lbl').textContent = 'Enregistrer';
+  $('#rec-live').hidden = true;
+  if (silent) {
+    if (state.asr && state.asr.rec) { try { state.asr.rec.abort(); } catch (e) { /* ignoré */ } }
+    state.asr = null;
+    return;
+  }
+  stopASR();
+  const total = rec.chunks.reduce((n, c) => n + c.length, 0);
+  const samples = new Float32Array(total);
+  let o = 0;
+  for (const c of rec.chunks) { samples.set(c, o); o += c.length; }
+  analyzeSamples(samples, rec.sr, false);
+}
+
+function analyzeSamples(samples, sr, fromFile) {
+  state.samples = samples;
+  state.sr = sr;
+  state.buffer = null;
+  state.fromFile = fromFile;
+  $('#btn-play').disabled = false;
+  const isCalib = !!state.item.calib;
+  const res = E.analyze(samples, sr, state.target.units, isCalib ? { forceOwn: true } : rangeOptions());
+  if (res.error) {
+    state.result = null;
+    let msg = res.error;
+    if (!fromFile && state.asr && state.asr.rec && /presque rien|Aucune voix/.test(msg)) {
+      msg += ' Si le test d’intelligibilité était coché, décoche-le : sur certains appareils, la reconnaissance vocale accapare le micro.';
+    }
+    setStatus(msg, 'error');
+    renderStaff();
+    renderResults();
+    renderReport();
+    return;
+  }
+  state.result = res;
+  if (isCalib) {
+    const cal = E.calibrationFrom(res);
+    if (cal.error) setStatus(cal.error, 'error');
+    else {
+      store.set('calib', { lo: cal.lo, hi: cal.hi, d: Date.now() });
+      setStatus('Calibration enregistrée : ta voix va d’environ ' + hzOf(cal.lo) + ' à ' + hzOf(cal.hi) + ' Hz. Les hauteurs sont désormais mesurées par rapport à ta voix. Tu peux passer aux autres phrases.', 'ok');
+      renderCalibBadge();
+    }
+  } else {
+    recordVoiceStats(res);
+    setStatus('');
+  }
+  saveHistory(res);
+  let worst = 0;
+  res.results.forEach((r, i) => {
+    const s = r.eval.score === null ? -1 : r.eval.score;
+    const w = res.results[worst].eval.score === null ? -1 : res.results[worst].eval.score;
+    if (s < w) worst = i;
+  });
+  state.selected = worst;
+  compareASR();
+  state.animateVoice = true;
+  renderStaff();
+  renderResults();
+  renderTrends();
+  renderReport();
+  renderLibrary();
+  const staff = $('#staff');
+  if (staff.getBoundingClientRect().top < 0) staff.scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+
+/* ---------- Lecture ---------- */
+
+function playCtx() {
+  if (!state.playCtx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    state.playCtx = new Ctx();
+  }
+  state.playCtx.resume().catch(() => {});
+  return state.playCtx;
+}
+function stopPlayback() {
+  if (state.playing) { try { state.playing.stop(); } catch (e) { /* déjà fini */ } state.playing = null; }
+}
+function playRange(from, to) {
+  if (!state.samples) return;
+  stopPlayback();
+  const ctx = playCtx();
+  if (!state.buffer) {
+    state.buffer = ctx.createBuffer(1, state.samples.length, state.sr);
+    state.buffer.getChannelData(0).set(state.samples);
+  }
+  const src = ctx.createBufferSource();
+  src.buffer = state.buffer;
+  src.connect(ctx.destination);
+  const start = Math.max(0, from || 0);
+  if (to) src.start(0, start, Math.max(0.05, to - start)); else src.start(0, start);
+  state.playing = src;
+  src.onended = () => { if (state.playing === src) state.playing = null; };
+}
+function playSelected() {
+  const r = state.result && state.result.results[state.selected];
+  if (!r) return;
+  playRange(r.seg.a * A.FRAME_MS / 1000 - 0.03, r.seg.b * A.FRAME_MS / 1000 + 0.04);
+}
+
+/* ---------- Modèle (synthèse vocale du navigateur) ---------- */
+
+let zhVoice = null;
+function pickVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  let best = null, bestScore = 0;
+  for (const v of speechSynthesis.getVoices()) {
+    let s = 0;
+    if (/^(zh[-_]CN|cmn)/i.test(v.lang)) s = 3;
+    else if (/^zh[-_](TW|SG|Hans)/i.test(v.lang)) s = 2;
+    else if (/^zh/i.test(v.lang) && !/HK|yue/i.test(v.lang)) s = 1;
+    if (s && /google|xiaoxiao|yunxi|tingting|huihui|lili/i.test(v.name)) s += 0.5;
+    if (s > bestScore) { bestScore = s; best = v; }
+  }
+  return best;
+}
+function speakModel() {
+  if (!state.target) return;
+  const text = state.target.units.map(u => u.ch).join('');
+  if (!text) { setStatus('Le modèle audio a besoin des caractères chinois de la phrase.', 'error'); return; }
+  if (!('speechSynthesis' in window)) { setStatus('La synthèse vocale n’existe pas dans ce navigateur.', 'error'); return; }
+  zhVoice = zhVoice || pickVoice();
+  if (!zhVoice) { setStatus('Aucune voix chinoise n’est disponible dans ce navigateur. Google Chrome en propose une (connexion nécessaire).', 'error'); return; }
+  stopPlayback();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(state.item.calib ? text.split('').join('，') : text);
+  u.voice = zhVoice;
+  u.lang = zhVoice.lang;
+  u.rate = $('#opt-slow').checked ? 0.6 : 0.9;
+  speechSynthesis.speak(u);
+  setStatus('Modèle : voix de synthèse « ' + zhVoice.name + ' ». Elle donne l’idée générale ; une voix de synthèse n’est pas une référence parfaite pour les tons.');
+}
+
+/* ---------- Fichier audio ---------- */
+
+async function importFile(file) {
+  if (!file) return;
+  stopRecording(true);
+  setStatus('Lecture du fichier…');
+  try {
+    const data = await file.arrayBuffer();
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    const audio = await ctx.decodeAudioData(data);
+    ctx.close().catch(() => {});
+    if (audio.duration > 30) { setStatus('Fichier trop long (plus de 30 s) : garde seulement la phrase.', 'error'); return; }
+    const mono = new Float32Array(audio.length);
+    for (let c = 0; c < audio.numberOfChannels; c++) {
+      const d = audio.getChannelData(c);
+      for (let i = 0; i < audio.length; i++) mono[i] += d[i] / audio.numberOfChannels;
+    }
+    state.asr = { status: 'file' };
+    state.asrCmp = null;
+    setStatus('');
+    analyzeSamples(mono, audio.sampleRate, true);
+  } catch (e) {
+    setStatus('Impossible de lire ce fichier audio (format non reconnu par le navigateur).', 'error');
+  }
+}
+
+/* ---------- Phrase personnalisée ---------- */
+
+function refreshCustomHint() {
+  $('#custom-hint').textContent = hasConverter()
+    ? 'Le pinyin est facultatif : il sera déduit des caractères. Si la déduction se trompe (caractère à plusieurs lectures), saisis-le toi-même.'
+    : 'Sans connexion, le pinyin ne peut pas être déduit : saisis-le avec les tons (accents ou chiffres).';
+}
+function useCustom(ev) {
+  ev.preventDefault();
+  const item = { h: $('#in-hanzi').value.trim(), p: $('#in-pinyin').value.trim(), fr: $('#in-fr').value.trim() };
+  const err = selectItem(item, 'custom');
+  $('#custom-msg').textContent = err || 'Phrase chargée.';
+  $('#custom-msg').className = 'status' + (err ? ' error' : ' ok');
+  if (!err) $('#main').scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+
+/* ---------- Événements ---------- */
+
+function onClick(ev) {
+  const t = ev.target.closest('button, .hit');
+  if (!t) return;
+  if (t.classList.contains('hit')) { selectSyllable(Number(t.dataset.i)); return; }
+  if (t.classList.contains('lib-item')) {
+    const item = findItem(t.dataset.cat, Number(t.dataset.idx));
+    if (item) {
+      const err = selectItem(item, t.dataset.cat);
+      if (err) setStatus(err, 'error');
+      else if (window.matchMedia('(max-width: 959px)').matches) $('#main').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+    return;
+  }
+  if (t.dataset.remove !== undefined) {
+    const practice = practiceList();
+    practice.splice(Number(t.dataset.remove), 1);
+    store.set('practice', practice);
+    renderLibrary();
+    return;
+  }
+  switch (t.dataset.act) {
+    case 'calibrate': selectItem(PORTEE_PHRASES[0].items[0], 'calib'); $('#main').scrollIntoView({ block: 'start', behavior: 'smooth' }); break;
+    case 'play-syl': playSelected(); break;
+    case 'prev-syl': selectSyllable(state.selected - 1); break;
+    case 'next-syl': selectSyllable(state.selected + 1); break;
+    case 'clear':
+      if (window.confirm('Effacer la calibration, l’historique et la liste « À retravailler » ?')) {
+        store.clear();
+        renderCalibBadge();
+        renderTrends();
+        renderLibrary();
+      }
+      break;
+    default: break;
+  }
+}
+
+function onKey(ev) {
+  const t = ev.target;
+  if (t.classList && t.classList.contains('hit')) {
+    if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectSyllable(Number(t.dataset.i)); }
+    else if (ev.key === 'ArrowRight') { ev.preventDefault(); selectSyllable(state.selected + 1, true); }
+    else if (ev.key === 'ArrowLeft') { ev.preventDefault(); selectSyllable(state.selected - 1, true); }
+  }
+}
+
+function init() {
+  applyTheme(store.get('theme', 'auto'));
+  $('#btn-theme').addEventListener('click', cycleTheme);
+  document.addEventListener('click', onClick);
+  document.addEventListener('keydown', onKey);
+  $('#btn-rec').addEventListener('click', () => (state.recording ? stopRecording() : startRecording()));
+  $('#btn-model').addEventListener('click', speakModel);
+  $('#btn-play').addEventListener('click', () => playRange(0));
+  $('#in-file').addEventListener('change', e => { importFile(e.target.files[0]); e.target.value = ''; });
+  $('#btn-copy').addEventListener('click', copyReport);
+  $('#btn-save').addEventListener('click', saveToPractice);
+  $('#custom-form').addEventListener('submit', useCustom);
+  if (!SpeechRec) {
+    $('#opt-asr').checked = false;
+    $('#opt-asr').disabled = true;
+    $('#opt-asr-wrap').title = 'Disponible dans Google Chrome et Microsoft Edge.';
+    $('#opt-asr-wrap').classList.add('disabled');
+  }
+  if (IS_MOBILE && SpeechRec) {
+    $('#opt-asr').checked = false;
+    $('#opt-asr-wrap').insertAdjacentHTML('beforeend', ' <span class="small">(sur téléphone, elle peut couper le micro)</span>');
+  }
+  if (IS_ANDROID) {
+    $('#btn-capture').hidden = false;
+    $('#in-capture').addEventListener('change', e => { importFile(e.target.files[0]); e.target.value = ''; });
+  }
+  if ('speechSynthesis' in window) {
+    zhVoice = pickVoice();
+    speechSynthesis.addEventListener('voiceschanged', () => { zhVoice = pickVoice(); });
+  }
+  const mic = micStatus();
+  if (!mic.ok) setStatus(mic.why, 'error');
+  watchPinyinLibrary();
+  refreshCustomHint();
+  renderCalibBadge();
+  renderTrends();
+
+  if ('ResizeObserver' in window) {
+    let lastWidth = 0;
+    new ResizeObserver(entries => {
+      const w = Math.floor(entries[0].contentRect.width);
+      if (Math.abs(w - lastWidth) >= 4) { lastWidth = w; renderStaff(); }
+    }).observe($('.staff-scroll'));
+  }
+
+  const last = store.get('last', null);
+  let started = false;
+  if (last && last.item) started = !selectItem(last.item, last.catId);
+  if (!started) {
+    if (currentCalibration()) selectItem(PORTEE_PHRASES[3].items[0], PORTEE_PHRASES[3].id);
+    else selectItem(PORTEE_PHRASES[0].items[0], 'calib');
+  }
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
+})();
+</script>
+</body>
+</html>
